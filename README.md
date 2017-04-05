@@ -1,3 +1,3 @@
 # CercaTrova
 Design Lab project
-- Documentation repository
+- Emergency User Application repository(client)
