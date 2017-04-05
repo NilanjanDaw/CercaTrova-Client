@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\d6724bbd575938895384cfb1cf7489f1f7eab58e\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="93c10d68ab5ea070f15782ae6d3a28d1f1d8f45e">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_d299df1887ff27776169c594b1f3fbd335072e0b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\8efbca7c2de11de4cf527879ed25753226cab858\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4b746ef0fd46acb5aaf3d9ab9a4cec22c28d3211">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_4d086144f02f7ee62deb4a199754bfbe88de075c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\30716e7c8868721588c1c42f97f5a5818a16fcb5\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="425c7b17887e5c3f8cbdf67ba171bc246f29b42c">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_84deb2a0f898ff13489616fb61ed2b2550a5fa80.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\16ea8faa8f3788618650269aea69692202f0d15e\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a3e61044038fb54cddf6b8dc79f41d2b57f42caf">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_30489ec9a22d8fd1308cce7e8ab9641d405754e7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\bd9a6394fcd25049f63841a378368e4793eb1532\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_779d146716046d855803d03fd2126fb1d29d80ff.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\23aaa5eb187344d045e27788eba1e278018cecfc\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="518768f3200963fbfec652f498da2c9d39245234">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_186723f73502a5d42dabb6d51610917e60b420d7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\6ae9dc2ec0b4a330b2b088c2d3d91703eee21b20\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9ab787a20aae245b5b3651ae0b9c38459eb37715">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_e42fd1af45f4c16f0df2a60e3fa13297cfaefcad.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\d5b14e61f08df183debaa23e1df535ff3befbd8d\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="70f23cb87278f89aa51e6f57e8f0fd5266572d95">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_d00501424cd5fb204f5cf9682991cd9de3f9c5da.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\59a847c539d17bdec7b967befe2dcc0aab7583bd\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d6a04527c17597019dad82777c5094a3d60d1c33">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_893712bf3ff3980b7cdc966e878309926d1cfd78.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\730b780fb243402291ab718e4d2e342698672767\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fbb206f7a119f66ce171d95aae1225a5b209a8b7">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_c117ff906be988414e438c6e5305ea8dbc231a1c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\b0f01f34fa133c544f53f4de46730f6333178239\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="93c1199fcb0a34b980e6fff8350daff62e696ec2">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_161963ddb8f4567bb739f6eb008e7bb7ea2b5c93.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nilan\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.0\support-annotations-25.3.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="dd84903d2e1af25a6081ef9038ad863cb14ca3a0">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\support-annotations-25.3.0_d1a55a92cd4ffb30e8b32cfa501138f4d620afdc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\0a7654a00c9974a30eb7595b1ef737f4136152f4\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="5cc5ef8347a6bafa14556cbd35230aa9b3431bb0">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_730f1ab468294e77a5f8fa11850ac403772904e7.jar" />
+    </item>
+
+</items>
