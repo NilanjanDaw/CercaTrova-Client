@@ -53,6 +53,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (mGoogleApiClient != null) {
+            buildGoogleApiClient();
+        }
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         if (mGoogleApiClient != null) {
