@@ -7,11 +7,11 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by nilan on 09-Apr-17.
+ * Created by nilanjan on 09-Apr-17.
  * Project CercaTrova
  */
 
-class Location implements Serializable{
+public class Location implements Serializable {
 
 
     @SerializedName("type")

@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -19,15 +20,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.thunderstruck.nilanjan.cercatrova.support.User;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+
+/**
+ * Created by nilanjan on 09-Apr-17.
+ * Project CercaTrova
+ */
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
 
@@ -39,7 +49,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     Button police;
     @BindView(R.id.fire_fighter)
     Button fireFighter;
+    @BindView(R.id.location_progress)
+    ProgressBar progress;
+    @BindView(R.id.view)
+    ScrollView scollView;
     LocationManager locationManager;
+    android.location.Location location;
+    User user;
     private int typeOfEmergency;
 
     @Override
@@ -47,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        User user = (User) getIntent().getSerializableExtra("profile_data");
+        user = (User) getIntent().getSerializableExtra("profile_data");
         Log.d(TAG, "onCreate: " + user.getAdhaarNumber());
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -61,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             mayRequestLocation();
             return;
         }
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             if (location != null)
                 Log.d(TAG, "getLocation: " + location.getLatitude() + " " + location.getLongitude());
@@ -89,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         else if (view.getId() == R.id.fire_fighter)
             typeOfEmergency = 3;
         Log.d(TAG, "notify: " + typeOfEmergency);
+        new LocationFinderTask().execute();
     }
 
     @Override
@@ -104,8 +121,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-        Log.d(TAG, "onLocationChanged: " + location.getLongitude());
+    public void onLocationChanged(android.location.Location location) {
+        this.location = location;
+        Log.d(TAG, "onLocationChanged: " + location.getLatitude() + " " + location.getLongitude());
     }
 
     @Override
@@ -165,5 +183,44 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         if (requestCode == REQUEST_ACCESS_LOCATION)
             getLocation();
+    }
+
+    private class LocationFinderTask extends AsyncTask<Object, Object, Location> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.setVisibility(View.VISIBLE);
+            scollView.setVisibility(View.GONE);
+        }
+
+        @Override
+        protected Location doInBackground(Object... voids) {
+            while (location == null) {
+                try {
+                    Thread.sleep(1000);
+                    Log.d(TAG, "doInBackground: null");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            return location;
+        }
+
+        @Override
+        protected void onPostExecute(Location location) {
+            super.onPostExecute(location);
+            com.thunderstruck.nilanjan.cercatrova.support.Location userLocation;
+            ArrayList<Double> coordinates = new ArrayList<>();
+            coordinates.add(location.getLatitude());
+            coordinates.add(location.getLongitude());
+            userLocation = new com.thunderstruck.nilanjan.cercatrova.support.Location("POINT", coordinates);
+            user.setLocation(userLocation);
+            Intent intent = new Intent(getBaseContext(), MapsActivity.class);
+            intent.putExtra("profile_data", user);
+            Log.d(TAG, "onPostExecute: " + location.getLatitude());
+            startActivity(intent);
+            finish();
+        }
     }
 }

@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by nilan on 09-Apr-17.
+ * Created by nilanjan on 09-Apr-17.
  * Project CercaTrova
  */
 
