@@ -51,19 +51,17 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
+    public static final String TAG = "LoginActivity";
     /**
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
-
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private Retrofit retrofit;
     private LoginEndpoint apiService;
-    public static final String TAG = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
-        retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -204,6 +202,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         Intent intent = new Intent(getBaseContext(), MainActivity.class);
                         intent.putExtra("profile_data", user);
                         startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(getBaseContext(), "Login Failed", Toast.LENGTH_LONG).show();
                     }
@@ -308,7 +307,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         };
 
         int ADDRESS = 0;
-        int IS_PRIMARY = 1;
     }
 
 }

@@ -13,6 +13,8 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="permission_rationale_location">"Contacts permissions are needed for providing
+        high accuracy GPS triangulation"</string>
     <string name="police">Police</string>
     <string name="ambulance">Ambulance</string>
     <string name="fire_fighter">FIre Fighter</string>
