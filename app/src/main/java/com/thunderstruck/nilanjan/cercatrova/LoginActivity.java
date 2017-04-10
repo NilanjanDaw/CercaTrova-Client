@@ -31,7 +31,7 @@ import android.widget.Toast;
 
 import com.thunderstruck.nilanjan.cercatrova.support.AuthenticationPacket;
 import com.thunderstruck.nilanjan.cercatrova.support.Constants;
-import com.thunderstruck.nilanjan.cercatrova.support.LoginEndpoint;
+import com.thunderstruck.nilanjan.cercatrova.support.Endpoint;
 import com.thunderstruck.nilanjan.cercatrova.support.User;
 
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private LoginEndpoint apiService;
+    private Endpoint apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        apiService = retrofit.create(LoginEndpoint.class);
+        apiService = retrofit.create(Endpoint.class);
 
     }
 
@@ -190,7 +190,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            AuthenticationPacket packet = new AuthenticationPacket("nilanjan@world.com", "abc123");
+            AuthenticationPacket packet = new AuthenticationPacket("a@world.com", "abc123");
             Call<User> call = apiService.validateLogin(packet);
             call.enqueue(new Callback<User>() {
 

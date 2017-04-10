@@ -24,6 +24,9 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.thunderstruck.nilanjan.cercatrova.support.Constants;
+import com.thunderstruck.nilanjan.cercatrova.support.Emergency;
+import com.thunderstruck.nilanjan.cercatrova.support.Endpoint;
 import com.thunderstruck.nilanjan.cercatrova.support.User;
 
 import java.util.ArrayList;
@@ -31,6 +34,11 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -52,12 +60,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @BindView(R.id.location_progress)
     ProgressBar progress;
     @BindView(R.id.view)
-    ScrollView scollView;
+    ScrollView scrollView;
     LocationManager locationManager;
     android.location.Location location;
     User user;
     private int typeOfEmergency;
-
+    private Endpoint apiService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,8 +74,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         user = (User) getIntent().getSerializableExtra("profile_data");
         Log.d(TAG, "onCreate: " + user.getAdhaarNumber());
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
         getLocation();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        apiService = retrofit.create(Endpoint.class);
     }
 
     private void getLocation() {
@@ -191,11 +203,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         protected void onPreExecute() {
             super.onPreExecute();
             progress.setVisibility(View.VISIBLE);
-            scollView.setVisibility(View.GONE);
+            scrollView.setVisibility(View.GONE);
         }
 
         @Override
         protected Location doInBackground(Object... voids) {
+
             while (location == null) {
                 try {
                     Thread.sleep(1000);
@@ -204,18 +217,32 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     e.printStackTrace();
                 }
             }
-            return location;
-        }
-
-        @Override
-        protected void onPostExecute(Location location) {
-            super.onPostExecute(location);
             com.thunderstruck.nilanjan.cercatrova.support.Location userLocation;
             ArrayList<Double> coordinates = new ArrayList<>();
             coordinates.add(location.getLatitude());
             coordinates.add(location.getLongitude());
             userLocation = new com.thunderstruck.nilanjan.cercatrova.support.Location("POINT", coordinates);
             user.setLocation(userLocation);
+            Emergency emergency = new Emergency(user.getAdhaarNumber(), typeOfEmergency);
+            Call<Emergency> call = apiService.notifyEmergency(emergency);
+            call.enqueue(new Callback<Emergency>() {
+
+                @Override
+                public void onResponse(Call<Emergency> call, Response<Emergency> response) {
+                    Log.d(TAG, "onResponse: Success");
+                }
+
+                @Override
+                public void onFailure(Call<Emergency> call, Throwable t) {
+                    Log.d(TAG, "onFailure: Failed");
+                }
+            });
+            return location;
+        }
+
+        @Override
+        protected void onPostExecute(Location location) {
+            super.onPostExecute(location);
             Intent intent = new Intent(getBaseContext(), MapsActivity.class);
             intent.putExtra("profile_data", user);
             Log.d(TAG, "onPostExecute: " + location.getLatitude());

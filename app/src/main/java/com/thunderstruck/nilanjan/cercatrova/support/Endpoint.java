@@ -10,13 +10,18 @@ import retrofit2.http.POST;
  * Project CercaTrova
  */
 
-public interface LoginEndpoint {
+public interface Endpoint {
 
-    @GET("user/")
+    @GET("login_server/user/")
     Call<User[]> getUserList();
-    @POST("user/")
+
+    @POST("login_server/user/")
     Call<User> createUser(@Body User user);
-    @POST("account_authentication/")
+
+    @POST("login_server/account_authentication/")
     Call<User> validateLogin(@Body AuthenticationPacket authenticationPacket);
+
+    @POST("emergency/notify/")
+    Call<Emergency> notifyEmergency(@Body Emergency emergency);
 
 }
