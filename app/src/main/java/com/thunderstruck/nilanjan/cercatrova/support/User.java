@@ -22,7 +22,7 @@ public class User implements Serializable{
     @SerializedName("email_id") @Expose
     private String emailId;
     @SerializedName("contact_number") @Expose
-    private int contactNumber;
+    private String contactNumber;
     @SerializedName("address") @Expose
     private String address;
     @SerializedName("age") @Expose
@@ -51,7 +51,7 @@ public class User implements Serializable{
      * @param password
      * @param adhaarNumber
      */
-    public User(String adhaarNumber, String firstName, String lastName, String emailId, int contactNumber, String address, int age, String gender, String bloodGroup, String password, Location location) {
+    public User(String adhaarNumber, String firstName, String lastName, String emailId, String contactNumber, String address, int age, String gender, String bloodGroup, String password, Location location) {
         super();
         this.adhaarNumber = adhaarNumber;
         this.firstName = firstName;
@@ -98,11 +98,11 @@ public class User implements Serializable{
         this.emailId = emailId;
     }
 
-    public int getContactNumber() {
+    public String getContactNumber() {
         return contactNumber;
     }
 
-    public void setContactNumber(int contactNumber) {
+    public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
     }
 
