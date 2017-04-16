@@ -3,10 +3,10 @@ package com.thunderstruck.nilanjan.cercatrova;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
@@ -20,12 +20,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.thunderstruck.nilanjan.cercatrova.support.Constants;
 import com.thunderstruck.nilanjan.cercatrova.support.Emergency;
+import com.thunderstruck.nilanjan.cercatrova.support.EmergencyPersonnel;
 import com.thunderstruck.nilanjan.cercatrova.support.Endpoint;
 import com.thunderstruck.nilanjan.cercatrova.support.User;
 
@@ -47,6 +46,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
  * Project CercaTrova
  */
 
+//TODO refactor to SRS nomenclature
 public class MainActivity extends AppCompatActivity implements LocationListener {
 
     public static final int REQUEST_ACCESS_LOCATION = 0;
@@ -57,10 +57,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     Button police;
     @BindView(R.id.fire_fighter)
     Button fireFighter;
-    @BindView(R.id.location_progress)
-    ProgressBar progress;
-    @BindView(R.id.view)
-    ScrollView scrollView;
     LocationManager locationManager;
     android.location.Location location;
     User user;
@@ -111,13 +107,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @OnClick({ R.id.ambulance, R.id.fire_fighter, R.id.police})
     public void notify(View view) {
         if (view.getId() == R.id.ambulance)
-            typeOfEmergency = 1;
-        else if (view.getId() == R.id.police)
             typeOfEmergency = 2;
+        else if (view.getId() == R.id.police)
+            typeOfEmergency = 1;
         else if (view.getId() == R.id.fire_fighter)
             typeOfEmergency = 3;
         Log.d(TAG, "notify: " + typeOfEmergency);
-        new LocationFinderTask().execute();
+        new EmergencyNotificationTask().execute();
     }
 
     @Override
@@ -197,17 +193,20 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             getLocation();
     }
 
-    private class LocationFinderTask extends AsyncTask<Object, Object, Location> {
+    private class EmergencyNotificationTask extends AsyncTask<Object, Object, EmergencyPersonnel> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress.setVisibility(View.VISIBLE);
-            scrollView.setVisibility(View.GONE);
+            ProgressDialog progressDialog = new ProgressDialog(MainActivity.this,
+                    R.style.AppTheme_Dark_Dialog);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Finding Help...");
+            progressDialog.show();
         }
 
         @Override
-        protected Location doInBackground(Object... voids) {
+        protected EmergencyPersonnel doInBackground(Object... voids) {
 
             while (location == null) {
                 try {
@@ -221,31 +220,34 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             ArrayList<Double> coordinates = new ArrayList<>();
             coordinates.add(location.getLatitude());
             coordinates.add(location.getLongitude());
-            userLocation = new com.thunderstruck.nilanjan.cercatrova.support.Location("POINT", coordinates);
+            userLocation = new com.thunderstruck.nilanjan.cercatrova.support.Location("Point", coordinates);
             user.setLocation(userLocation);
-            Emergency emergency = new Emergency(user.getAdhaarNumber(), typeOfEmergency);
-            Call<Emergency> call = apiService.notifyEmergency(emergency);
-            call.enqueue(new Callback<Emergency>() {
-
+            String locationString = "POINT(" + location.getLatitude() + " " + location.getLongitude() + ")";
+            Emergency emergency = new Emergency(user.getAdhaarNumber(), typeOfEmergency, locationString);
+            Call<EmergencyPersonnel> call = apiService.notifyEmergency(emergency);
+            final EmergencyPersonnel[] personnel = new EmergencyPersonnel[1];
+            call.enqueue(new Callback<EmergencyPersonnel>() {
                 @Override
-                public void onResponse(Call<Emergency> call, Response<Emergency> response) {
-                    Log.d(TAG, "onResponse: Success");
+                public void onResponse(Call<EmergencyPersonnel> call, Response<EmergencyPersonnel> response) {
+                    personnel[0] = response.body();
+                    if (personnel[0] != null)
+                        Log.d(TAG, "onResponse: personnelID " + personnel[0].getPersonnelId());
                 }
 
                 @Override
-                public void onFailure(Call<Emergency> call, Throwable t) {
-                    Log.d(TAG, "onFailure: Failed");
+                public void onFailure(Call<EmergencyPersonnel> call, Throwable t) {
+                    Log.d(TAG, "onFailure: " + t.getMessage());
                 }
             });
-            return location;
+            return personnel[0];
         }
 
         @Override
-        protected void onPostExecute(Location location) {
-            super.onPostExecute(location);
+        protected void onPostExecute(EmergencyPersonnel emergencyPersonnel) {
+            super.onPostExecute(emergencyPersonnel);
             Intent intent = new Intent(getBaseContext(), MapsActivity.class);
             intent.putExtra("profile_data", user);
-            Log.d(TAG, "onPostExecute: " + location.getLatitude());
+            intent.putExtra("emergency_responder", emergencyPersonnel);
             startActivity(intent);
             finish();
         }

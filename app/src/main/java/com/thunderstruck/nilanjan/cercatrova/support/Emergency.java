@@ -16,11 +16,16 @@ public class Emergency {
     @SerializedName("emergency_type")
     @Expose
     private int emergencyType;
+    @SerializedName("location")
+    @Expose
+    private String location;
 
-    public Emergency(String adhaarNumber, int emergencyType) {
+
+    public Emergency(String adhaarNumber, int emergencyType, String location) {
 
         this.adhaarNumber = adhaarNumber;
         this.emergencyType = emergencyType;
+        this.location = location;
     }
 
     public String getAdhaarNumber() {
@@ -29,5 +34,13 @@ public class Emergency {
 
     public int getEmergencyType() {
         return emergencyType;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

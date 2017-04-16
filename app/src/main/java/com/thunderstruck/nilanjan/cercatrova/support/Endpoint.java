@@ -22,6 +22,6 @@ public interface Endpoint {
     Call<User> validateLogin(@Body AuthenticationPacket authenticationPacket);
 
     @POST("emergency/notify/")
-    Call<Emergency> notifyEmergency(@Body Emergency emergency);
+    Call<EmergencyPersonnel> notifyEmergency(@Body Emergency emergency);
 
 }
