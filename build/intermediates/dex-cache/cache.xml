@@ -65,15 +65,6 @@
         <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_060f07447b277079996c516a3f3eb656effc282c.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\nilan\.android\build-cache\dd2f4aae9090d4fff8e4a0a8c08c335a2fa5e9e7\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="4b17463c814bdc562fb0392fa3494063623a0904">
-        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_2273ad4847b7a130cd00a47b49ddd28ec9d2812c\classes.dex" />
-    </item>
-    <item
         is-multidex="false"
         jar="C:\Users\nilan\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-annotations\8.5.1\bb67dad90bab7cd77a8f7f1b8442b47e3a2326bc\butterknife-annotations-8.5.1.jar"
         jumboMode="false"
@@ -99,6 +90,15 @@
         revision="25.0.2"
         sha1="a09926806199499a20b2f5168779499abfa33342">
         <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\converter-gson-2.2.0_af381e9548af4b5b53139e633ce9e02dce887c96.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\nilan\.android\build-cache\d1686102afb55c3db24211c33a6bb6aa25877858\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b215e312bdc1ee7bfda31674eab5df8bad45c014">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ed062ce7fde2aa8c709f5819fcca7ab7e4b3cab0\classes.dex" />
     </item>
     <item
         is-multidex="false"
@@ -268,7 +268,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="ae83039ba7e305d80ae8ea12af0b986144d9c180">
+        sha1="ef668298a9dc2c5dc3bb05cb14742267a81e3c6e">
         <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_152da76de937890d80b22c7f3caac88d273dd451\classes.dex" />
     </item>
     <item
