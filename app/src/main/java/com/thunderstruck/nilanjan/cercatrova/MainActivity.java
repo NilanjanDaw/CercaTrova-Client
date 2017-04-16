@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     User user;
     private int typeOfEmergency;
     private Endpoint apiService;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +77,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         apiService = retrofit.create(Endpoint.class);
+        progressDialog = new ProgressDialog(MainActivity.this,
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Finding Help...");
     }
 
     private void getLocation() {
@@ -198,24 +203,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            ProgressDialog progressDialog = new ProgressDialog(MainActivity.this,
-                    R.style.AppTheme_Dark_Dialog);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Finding Help...");
+            showProgress(true);
             progressDialog.show();
         }
 
         @Override
         protected EmergencyPersonnel doInBackground(Object... voids) {
 
-            while (location == null) {
-                try {
-                    Thread.sleep(1000);
-                    Log.d(TAG, "doInBackground: null");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
             com.thunderstruck.nilanjan.cercatrova.support.Location userLocation;
             ArrayList<Double> coordinates = new ArrayList<>();
             coordinates.add(location.getLatitude());
@@ -226,30 +220,56 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             Emergency emergency = new Emergency(user.getAdhaarNumber(), typeOfEmergency, locationString);
             Call<EmergencyPersonnel> call = apiService.notifyEmergency(emergency);
             final EmergencyPersonnel[] personnel = new EmergencyPersonnel[1];
+            final int status[] = new int[1];
+            status[0] = 0;
             call.enqueue(new Callback<EmergencyPersonnel>() {
                 @Override
                 public void onResponse(Call<EmergencyPersonnel> call, Response<EmergencyPersonnel> response) {
                     personnel[0] = response.body();
                     if (personnel[0] != null)
                         Log.d(TAG, "onResponse: personnelID " + personnel[0].getPersonnelId());
+                    status[0] = 1;
                 }
 
                 @Override
                 public void onFailure(Call<EmergencyPersonnel> call, Throwable t) {
                     Log.d(TAG, "onFailure: " + t.getMessage());
+                    personnel[0] = null;
+                    status[0] = 1;
                 }
             });
+            while (status[0] == 0 || location == null) {
+                try {
+                    Thread.sleep(1000);
+                    Log.d(TAG, "doInBackground: null");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
             return personnel[0];
         }
 
         @Override
         protected void onPostExecute(EmergencyPersonnel emergencyPersonnel) {
             super.onPostExecute(emergencyPersonnel);
-            Intent intent = new Intent(getBaseContext(), MapsActivity.class);
-            intent.putExtra("profile_data", user);
-            intent.putExtra("emergency_responder", emergencyPersonnel);
-            startActivity(intent);
-            finish();
+            if (emergencyPersonnel != null) {
+                Intent intent = new Intent(getBaseContext(), MapsActivity.class);
+                intent.putExtra("profile_data", user);
+                intent.putExtra("emergency_responder", emergencyPersonnel);
+                startActivity(intent);
+                finish();
+            } else {
+                showProgress(false);
+                Toast.makeText(MainActivity.this, "Failed to find help. Please Try again!", Toast.LENGTH_SHORT).show();
+            }
         }
+    }
+
+    private void showProgress(boolean show) {
+        if (show)
+            progressDialog.show();
+        else
+            progressDialog.dismiss();
     }
 }

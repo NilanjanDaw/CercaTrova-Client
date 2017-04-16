@@ -3,8 +3,14 @@ package com.thunderstruck.nilanjan.cercatrova;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +21,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -25,10 +33,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.thunderstruck.nilanjan.cercatrova.support.EmergencyPersonnel;
 import com.thunderstruck.nilanjan.cercatrova.support.User;
 
 import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -40,16 +56,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
     private User user;
+    private EmergencyPersonnel emergencyPersonnel;
+    @BindView(R.id.name) TextView name;
+    @BindView(R.id.id) TextView id;
+    @BindView(R.id.car_number) TextView carNumber;
+    @BindView(R.id.base) TextView base;
+    @BindView(R.id.contact) Button contact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        ButterKnife.bind(this);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         user = (User) getIntent().getSerializableExtra("profile_data");
+        emergencyPersonnel = (EmergencyPersonnel) getIntent().getSerializableExtra("emergency_responder");
+        String name = "Name: " + emergencyPersonnel.getFirstName() + " " + emergencyPersonnel.getLastName();
+        String id = "ID: " + emergencyPersonnel.getPersonnelId();
+        String base = "Base Station: " + emergencyPersonnel.getBaseStation();
+        String carNumber = "Car Number: " + emergencyPersonnel.getCarNumber();
+        this.name.setText(name);
+        this.id.setText(id);
+        this.base.setText(base);
+        this.carNumber.setText(carNumber);
+        contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + emergencyPersonnel.getContactNumber()));
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -72,9 +112,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
         LatLng userLocation = new LatLng(user.getLocation().getCoordinates().get(0),
                 user.getLocation().getCoordinates().get(1));
+        LatLng personnelLocation = new LatLng(emergencyPersonnel.getLocation().getCoordinates().get(0),
+                emergencyPersonnel.getLocation().getCoordinates().get(1)
+                );
+        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.policecar);
+        mMap.addMarker(new MarkerOptions().position(personnelLocation).icon(bitmapDescriptor));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15f));
         getLocationUpdate();
     }

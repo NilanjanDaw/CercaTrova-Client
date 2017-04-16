@@ -3,6 +3,15 @@
 
     <item
         is-multidex="true"
+        jar="C:\Users\nilan\.android\build-cache\719688e4076331be089cbf0d152cb17e9db81cb5\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="914f5d3e3ace66080e59613708f06d129a222e25">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d3e73bbe87cf8da5584fa93504fef1c906d93b09\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"

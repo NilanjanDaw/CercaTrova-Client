@@ -197,12 +197,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 public void onResponse(Call<User> call, Response<User> response) {
                     User user = response.body();
                     if (user != null && user.getFirstName() != null) {
+                        showProgress(false);
                         Log.d(TAG, "onResponse: " + user.getFirstName());
                         Intent intent = new Intent(getBaseContext(), MainActivity.class);
                         intent.putExtra("profile_data", user);
                         startActivity(intent);
                         finish();
                     } else {
+                        showProgress(false);
                         Toast.makeText(getBaseContext(), "Login Failed", Toast.LENGTH_LONG).show();
                     }
                 }
@@ -211,6 +213,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 public void onFailure(Call<User> call, Throwable t) {
                     Log.d(TAG, "onFailure: Failed");
                     Log.d(TAG, "onFailure: " + t.getMessage());
+                    Toast.makeText(LoginActivity.this, "Unfortunately Login failed!", Toast.LENGTH_SHORT).show();
+                    showProgress(false);
                 }
             });
         }
