@@ -23,6 +23,9 @@ public class User implements Serializable{
     private String emailId;
     @SerializedName("contact_number") @Expose
     private String contactNumber;
+    @SerializedName("device_id")
+    @Expose
+    private String deviceID;
     @SerializedName("address") @Expose
     private String address;
     @SerializedName("age") @Expose
@@ -50,8 +53,12 @@ public class User implements Serializable{
      * @param firstName
      * @param password
      * @param adhaarNumber
+     * @param deviceID
      */
-    public User(String adhaarNumber, String firstName, String lastName, String emailId, String contactNumber, String address, int age, String gender, String bloodGroup, String password, Location location) {
+    public User(String adhaarNumber, String firstName, String lastName,
+                String emailId, String contactNumber, String address,
+                int age, String gender, String bloodGroup,
+                String password, Location location, String deviceID) {
         super();
         this.adhaarNumber = adhaarNumber;
         this.firstName = firstName;
@@ -64,6 +71,7 @@ public class User implements Serializable{
         this.bloodGroup = bloodGroup;
         this.password = password;
         this.location = location;
+        this.deviceID = deviceID;
     }
 
     public String getAdhaarNumber() {
@@ -152,6 +160,10 @@ public class User implements Serializable{
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public String getDeviceID() {
+        return this.deviceID;
     }
 
 }

@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -26,6 +27,7 @@ import com.thunderstruck.nilanjan.cercatrova.support.Constants;
 import com.thunderstruck.nilanjan.cercatrova.support.Emergency;
 import com.thunderstruck.nilanjan.cercatrova.support.EmergencyPersonnel;
 import com.thunderstruck.nilanjan.cercatrova.support.Endpoint;
+import com.thunderstruck.nilanjan.cercatrova.support.UpdatePacket;
 import com.thunderstruck.nilanjan.cercatrova.support.User;
 
 import java.util.ArrayList;
@@ -198,6 +200,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             getLocation();
     }
 
+    private void showProgress(boolean show) {
+        if (show)
+            progressDialog.show();
+        else
+            progressDialog.dismiss();
+    }
+
     private class EmergencyNotificationTask extends AsyncTask<Object, Object, EmergencyPersonnel> {
 
         @Override
@@ -210,6 +219,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         @Override
         protected EmergencyPersonnel doInBackground(Object... voids) {
 
+            waitForLocationUpdate();
+
             com.thunderstruck.nilanjan.cercatrova.support.Location userLocation;
             ArrayList<Double> coordinates = new ArrayList<>();
             coordinates.add(location.getLatitude());
@@ -217,10 +228,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             userLocation = new com.thunderstruck.nilanjan.cercatrova.support.Location("Point", coordinates);
             user.setLocation(userLocation);
             String locationString = "POINT(" + location.getLatitude() + " " + location.getLongitude() + ")";
+            final int status[] = new int[1];
+            updateUserProfile(user.getEmailId(), locationString);
+            //TODO consider moving code to new method
             Emergency emergency = new Emergency(user.getAdhaarNumber(), typeOfEmergency, locationString);
             Call<EmergencyPersonnel> call = apiService.notifyEmergency(emergency);
             final EmergencyPersonnel[] personnel = new EmergencyPersonnel[1];
-            final int status[] = new int[1];
             status[0] = 0;
             call.enqueue(new Callback<EmergencyPersonnel>() {
                 @Override
@@ -238,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     status[0] = 1;
                 }
             });
-            while (status[0] == 0 || location == null) {
+            while (status[0] == 0) {
                 try {
                     Thread.sleep(1000);
                     Log.d(TAG, "doInBackground: null");
@@ -248,6 +261,47 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
 
             return personnel[0];
+        }
+
+        private void updateUserProfile(String userID, String location) {
+            SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.shared_preference_file), MODE_PRIVATE);
+            String deviceID = "";
+            while (deviceID.equals("")) {
+                deviceID = sharedPreferences.getString("device_id", "");
+                if (!deviceID.equals(""))
+                    break;
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            UpdatePacket packet = new UpdatePacket(userID, location, deviceID);
+            Call<User> updateProfile = apiService.updateProfile(packet);
+            updateProfile.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.body() != null)
+                        Log.d(TAG, "onResponse: Profile update" + response.body().getDeviceID());
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                }
+            });
+
+        }
+
+        private void waitForLocationUpdate() {
+
+            while (location == null) {
+                try {
+                    Thread.sleep(1000);
+                    Log.d(TAG, "doInBackground: null");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         @Override
@@ -264,12 +318,5 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 Toast.makeText(MainActivity.this, "Failed to find help. Please Try again!", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    private void showProgress(boolean show) {
-        if (show)
-            progressDialog.show();
-        else
-            progressDialog.dismiss();
     }
 }

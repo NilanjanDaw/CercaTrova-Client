@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -60,6 +61,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private ProgressDialog progressDialog;
     private Endpoint apiService;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +89,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 attemptLogin();
             }
         });
+
+        sharedPreferences = this.getSharedPreferences(getString(R.string.shared_preference_file), MODE_PRIVATE);
+        if (sharedPreferences.contains("user_id") && sharedPreferences.contains("password")) {
+            mEmailView.setText(sharedPreferences.getString("user_id", ""));
+            mPasswordView.setText(sharedPreferences.getString("password", ""));
+            Log.d(TAG, "onCreate: shared " + sharedPreferences.getString("user_id", ""));
+        }
 
         progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
@@ -189,7 +198,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            AuthenticationPacket packet = new AuthenticationPacket("a@world.com", "abc123");
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("user_id", email);
+            editor.putString("password", password);
+            editor.apply();
+            AuthenticationPacket packet = new AuthenticationPacket(email, password);
             Call<User> call = apiService.validateLogin(packet);
             call.enqueue(new Callback<User>() {
 

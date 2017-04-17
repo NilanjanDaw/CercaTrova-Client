@@ -2,7 +2,6 @@ package com.thunderstruck.nilanjan.cercatrova.support;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -12,14 +11,14 @@ import retrofit2.http.POST;
 
 public interface Endpoint {
 
-    @GET("login_server/user/")
-    Call<User[]> getUserList();
-
     @POST("login_server/user/")
     Call<User> createUser(@Body User user);
 
     @POST("login_server/account_authentication/")
     Call<User> validateLogin(@Body AuthenticationPacket authenticationPacket);
+
+    @POST("login_server/update/")
+    Call<User> updateProfile(@Body UpdatePacket updatePacket);
 
     @POST("emergency/notify/")
     Call<EmergencyPersonnel> notifyEmergency(@Body Emergency emergency);
