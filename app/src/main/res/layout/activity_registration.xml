@@ -100,6 +100,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textSize="18sp" />
 
+
             <EditText
                 android:id="@+id/phone_number"
                 android:layout_width="0dp"
@@ -125,7 +126,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/emailid"
+                android:id="@+id/email_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
@@ -219,12 +220,37 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textSize="18sp" />
 
-            <EditText
+            <RadioGroup
                 android:id="@+id/gender"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1.2"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="M" />
+
+                <RadioButton
+                    android:id="@+id/female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="F" />
+
+                <RadioButton
+                    android:id="@+id/others"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="O" />
+
+
+            </RadioGroup>
+
         </LinearLayout>
 
         <LinearLayout
