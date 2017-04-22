@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
         if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION)) {
             Snackbar.make(((Activity) getBaseContext()).findViewById(android.R.id.content),
-                    R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+                    R.string.permission_rationale_location, Snackbar.LENGTH_INDEFINITE)
                     .setAction(android.R.string.ok, new View.OnClickListener() {
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
