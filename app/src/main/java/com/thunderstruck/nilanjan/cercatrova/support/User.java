@@ -40,6 +40,21 @@ public class User implements Serializable{
     private Location location;
 
 
+    public User(String adhaarNumber, String firstName, String lastName,
+                String emailId, String contactNumber, String address,
+                int age, String gender, String bloodGroup, String password) {
+        this.adhaarNumber = adhaarNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailId = emailId;
+        this.contactNumber = contactNumber;
+        this.address = address;
+        this.age = age;
+        this.gender = gender;
+        this.bloodGroup = bloodGroup;
+        this.password = password;
+    }
+
     /**
      *
      * @param lastName
@@ -60,6 +75,7 @@ public class User implements Serializable{
                 int age, String gender, String bloodGroup,
                 String password, Location location, String deviceID) {
         super();
+
         this.adhaarNumber = adhaarNumber;
         this.firstName = firstName;
         this.lastName = lastName;

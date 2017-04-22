@@ -45,7 +45,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service
             android:name=".CercaTrovaInstanceIDService"
             android:exported="false">
@@ -54,6 +53,7 @@
             </intent-filter>
         </service>
 
+        <activity android:name=".RegistrationActivity"></activity>
     </application>
 
 </manifest>
