@@ -65,6 +65,24 @@
         <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\androidTest\debug\javawriter-2.1.1_2c6928b4ec3356df6820641a0f98613e760dd645.jar" />
     </item>
     <item
+        is-multidex="true"
+        jar="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4621419ceb0aea39c1d6f3301bafe651cbf9ba8b">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_152da76de937890d80b22c7f3caac88d273dd451\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\nilan\.android\build-cache\7a1ad85b29b21ac9bcd58a51427547dbc2406811\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c5d103b270b3f3b50d8e6b44aa8e068b0de33426">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f45cd010498c024b131baad14c2a3e17cef47cdc\classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="C:\Users\nilan\.android\build-cache\97d4bda1aee377d13d241fe39f5b41fab62ac217\output\jars\classes.jar"
         jumboMode="false"
@@ -126,6 +144,15 @@
         revision="25.0.2"
         sha1="d115b0e9e1501135fe91254ba884fcbd83d374c0">
         <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\androidTest\debug\classes_aad272a065ce760b117d444dc9b8148b001fd343.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_d3b52aa5ed2288731dd6752f38f91b9a9d1a9511\classes.dex" />
     </item>
     <item
         is-multidex="false"
