@@ -34,6 +34,26 @@ public class RegistrationInstrumentedTest {
     public IntentsTestRule<RegistrationActivity> mActivityRule
             = new IntentsTestRule<>(RegistrationActivity.class);
 
+    private static Matcher<View> withError(final String expected) {
+        return new TypeSafeMatcher<View>() {
+
+            @Override
+            public boolean matchesSafely(View view) {
+                if (!(view instanceof EditText)) {
+                    return false;
+                }
+                EditText editText = (EditText) view;
+                CharSequence error = editText.getError();
+                return error != null && error.toString().equals(expected);
+            }
+
+            @Override
+            public void describeTo(Description description) {
+
+            }
+        };
+    }
+
     @Test
     public void testRegistrationFirstName() throws Exception {
 
@@ -193,12 +213,6 @@ public class RegistrationInstrumentedTest {
     @Test
     public void testRegistrationAge() throws Exception {
 
-        onView(withId(R.id.age))
-                .perform(typeText("DF199"), closeSoftKeyboard());
-        onView(withId(R.id.register)).perform(scrollTo(), click());
-        onView(withId(R.id.age)).check(matches(withError(
-                mActivityRule.getActivity().getString(R.string.invalid_field))));
-
         onView(withId(R.id.age)).perform(scrollTo(), clearText());
         onView(withId(R.id.age))
                 .perform(typeText(""), closeSoftKeyboard());
@@ -208,7 +222,7 @@ public class RegistrationInstrumentedTest {
 
         onView(withId(R.id.age)).perform(scrollTo(), clearText());
         onView(withId(R.id.age))
-                .perform(typeText("a@$!world"), closeSoftKeyboard());
+                .perform(typeText("0"), closeSoftKeyboard());
         onView(withId(R.id.register)).perform(scrollTo(), click());
         onView(withId(R.id.age)).check(matches(withError(
                 mActivityRule.getActivity().getString(R.string.invalid_field))));
@@ -268,49 +282,22 @@ public class RegistrationInstrumentedTest {
 
     @Test
     public void validCredentials() {
-        onView(withId(R.id.firstname)).perform(clearText());
-        onView(withId(R.id.lastname)).perform(clearText());
-        onView(withId(R.id.phone_number)).perform(clearText());
-        onView(withId(R.id.email_id)).perform(clearText());
-        onView(withId(R.id.address)).perform(clearText());
-        onView(withId(R.id.adhaar_number)).perform(clearText());
-        onView(withId(R.id.age)).perform(clearText());
-        onView(withId(R.id.blood_group)).perform(clearText());
-        onView(withId(R.id.password)).perform(clearText());
         onView(withId(R.id.firstname))
-                .perform(typeText("Debapriya"), closeSoftKeyboard());
-        onView(withId(R.id.lastname)).perform(typeText("Paul"), closeSoftKeyboard());
+                .perform(scrollTo(), typeText("Debapriya"), closeSoftKeyboard());
+        onView(withId(R.id.lastname)).perform(scrollTo(), typeText("Paul"), closeSoftKeyboard());
         onView(withId(R.id.phone_number))
-                .perform(typeText("9831141366"), closeSoftKeyboard());
-        onView(withId(R.id.email_id)).perform(typeText("paul@gmail.com"), closeSoftKeyboard());
+                .perform(scrollTo(), typeText("9831141366"), closeSoftKeyboard());
+        onView(withId(R.id.email_id)).perform(scrollTo(), typeText("paul12@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.address))
-                .perform(typeText("46, Bangur Avenue"), closeSoftKeyboard());
-        onView(withId(R.id.adhaar_number)).perform(typeText("2222555577779999"), closeSoftKeyboard());
+                .perform(scrollTo(), typeText("46, Bangur Avenue"), closeSoftKeyboard());
+        onView(withId(R.id.adhaar_number)).perform(scrollTo(), typeText("222255557778"), closeSoftKeyboard());
         onView(withId(R.id.age))
-                .perform(typeText("21"), closeSoftKeyboard());
-        onView(withId(R.id.blood_group)).perform(typeText("A+"), closeSoftKeyboard());
-        onView(withId(R.id.password)).perform(typeText("bghjudfg45"), closeSoftKeyboard());
-        onView(withId(R.id.register)).perform(click());
+                .perform(scrollTo(), typeText("21"), closeSoftKeyboard());
+        onView(withId(R.id.female)).perform(scrollTo(), click());
+        onView(withId(R.id.blood_group)).perform(scrollTo(), typeText("A+"), closeSoftKeyboard());
+        onView(withId(R.id.password)).perform(scrollTo(), typeText("bghjudfg45"), closeSoftKeyboard());
+        onView(withId(R.id.register)).perform(scrollTo(), click());
         intended(hasComponent(MainActivity.class.getName()));
-    }
-
-    private static Matcher<View> withError(final String expected) {
-        return new TypeSafeMatcher<View>() {
-
-            @Override
-            public boolean matchesSafely(View view) {
-                if (!(view instanceof EditText)) {
-                    return false;
-                }
-                EditText editText = (EditText) view;
-                return editText.getError().toString().equals(expected);
-            }
-
-            @Override
-            public void describeTo(Description description) {
-
-            }
-        };
     }
 
 }

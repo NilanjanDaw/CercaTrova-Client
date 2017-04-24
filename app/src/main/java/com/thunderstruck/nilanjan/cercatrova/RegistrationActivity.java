@@ -148,7 +148,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private boolean emailValidator(String emailId)
     {
-        return !Objects.equals(emailId, "") || android.util.Patterns.EMAIL_ADDRESS.matcher(emailId).matches();
+        return !Objects.equals(emailId, "") && android.util.Patterns.EMAIL_ADDRESS.matcher(emailId).matches();
 
     }
 
@@ -156,34 +156,34 @@ public class RegistrationActivity extends AppCompatActivity {
     {
         Pattern pattern = Pattern.compile("^[0-9]{10}");
         Matcher matcher = pattern.matcher(phoneNumber);
-        return !Objects.equals(phoneNumber, "") || matcher.matches();
+        return !Objects.equals(phoneNumber, "") && matcher.matches();
     }
 
     private boolean nameValidator(String name)
     {
-        return !Objects.equals(name, "") || name.matches("[a-zA-Z]+");
+        return !Objects.equals(name, "") && name.matches("[a-zA-Z]+");
     }
 
     private boolean adhaarNoValidator(String adhaarNumber)
     {
         Pattern pattern = Pattern.compile("^[0-9]{12}");
         Matcher matcher = pattern.matcher(adhaarNumber);
-        return !Objects.equals(adhaarNumber, "") || matcher.matches();
+        return !Objects.equals(adhaarNumber, "") && matcher.matches();
     }
 
     private boolean ageValidator(String age)
     {
-        return !Objects.equals(age, "") || age.matches("^[0-9]+");
+        return !Objects.equals(age, "") && age.matches("^[0]?[1-9]+$");
     }
 
     private boolean bloodGroupValidator(String bloodGroup)
     {
-        return !Objects.equals(bloodGroup, "") || bloodGroup.matches("^(A|B|AB|O)[+-]$");
+        return !Objects.equals(bloodGroup, "") && bloodGroup.matches("^(A|B|AB|O)[+-]$");
     }
 
     private boolean passwordValidator(String password)
     {
-        return !Objects.equals(password, "") || password.length() > 5;
+        return !Objects.equals(password, "") && password.length() > 5;
     }
 
 
