@@ -2,21 +2,19 @@ package com.thunderstruck.nilanjan.cercatrova;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.thunderstruck.nilanjan.cercatrova.support.Constants;
 import com.thunderstruck.nilanjan.cercatrova.support.Endpoint;
 import com.thunderstruck.nilanjan.cercatrova.support.User;
 
-import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,9 +30,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RegistrationActivity extends AppCompatActivity {
 
     public static final String TAG = "RegistrationActivity";
-
-    private Endpoint apiService;
-
     @BindView(R.id.firstname) EditText firstName;
     @BindView(R.id.lastname) EditText lastName;
     @BindView(R.id.phone_number) EditText phoneNumber;
@@ -46,6 +41,7 @@ public class RegistrationActivity extends AppCompatActivity {
     @BindView(R.id.blood_group) EditText bloodGroup;
     @BindView(R.id.password) EditText password;
     @BindView(R.id.register) Button register;
+    private Endpoint apiService;
     private ProgressDialog progressDialog;
 
     @Override
@@ -114,39 +110,40 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private boolean validateLogin() {
+        int ctr = 0;
         if(!emailValidator(emailId.getText().toString())) {
             emailId.setError(getString(R.string.invalid_field));
-            return false;
+            ctr = 1;
         }
         if(!phoneNoValidator(phoneNumber.getText().toString())) {
             phoneNumber.setError(getString(R.string.invalid_field));
-            return false;
+            ctr = 1;
         }
         if(!nameValidator(firstName.getText().toString())) {
             firstName.setError(getString(R.string.invalid_field));
-            return false;
+            ctr = 1;
         }
         if(!nameValidator(lastName.getText().toString())) {
             lastName.setError(getString(R.string.invalid_field));
-            return false;
+            ctr = 1;
         }
         if(!adhaarNoValidator(adhaarNumber.getText().toString())) {
             adhaarNumber.setError(getString(R.string.invalid_field));
-            return false;
+            ctr = 1;
         }
         if(!ageValidator(age.getText().toString())) {
             age.setError(getString(R.string.invalid_field));
-            return false;
+            ctr = 1;
         }
         if(!bloodGroupValidator(bloodGroup.getText().toString())) {
             bloodGroup.setError(getString(R.string.invalid_field));
-            return false;
+            ctr = 1;
         }
         if(!passwordValidator(password.getText().toString())) {
             password.setError(getString(R.string.invalid_field));
-            return false;
+            ctr = 1;
         }
-        return true;
+        return (ctr == 0);
     }
 
     private boolean emailValidator(String emailId)

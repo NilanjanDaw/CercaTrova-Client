@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.thunderstruck.nilanjan.cercatrova.RegistrationActivity">
@@ -92,8 +93,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:inputType="phone"/>
+                android:inputType="phone"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
         </LinearLayout>
 
         <LinearLayout
@@ -116,8 +117,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:inputType="textEmailAddress"/>
+                android:inputType="textEmailAddress"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
         </LinearLayout>
 
         <LinearLayout
@@ -163,8 +164,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:inputType="number"/>
+                android:inputType="number"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
         </LinearLayout>
 
         <LinearLayout
@@ -187,8 +188,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:inputType="number"/>
+                android:inputType="number"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
         </LinearLayout>
 
         <LinearLayout
@@ -282,16 +283,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.2"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:gravity="center_horizontal"
-            android:layout_marginTop="@dimen/activity_horizontal_margin">
+            android:orientation="horizontal">
 
         <Button
             android:id="@+id/register"

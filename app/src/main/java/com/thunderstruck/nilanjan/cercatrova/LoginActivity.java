@@ -228,7 +228,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         finish();
                     } else {
                         showProgress(false);
-                        Toast.makeText(getBaseContext(), "Login Failed", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Unfortunately Login Failed", Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -315,4 +315,3 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
 }
-

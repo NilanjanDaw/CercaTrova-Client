@@ -2,202 +2,121 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.android\build-cache\27673118f27ba15b447c6703fdefbaef11a3de69\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\598fcad1446b9bdc08ae8f7da81fc02b20c446c1\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="bdcc2a9572f18b8c90a3a157cab6cdfc97c6c736">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_666d1d9a567ce1b376e662d703d4d50a2ce5dc89\classes.dex" />
+        sha1="5cc5ef8347a6bafa14556cbd35230aa9b3431bb0">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_7e2fc23d566e39247af5f75d2b2ef16dc3201cd6.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.11.0\840897fcd7223a8143f1d9b6f69714e7be34fd50\okio-1.11.0.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\71a410b3bb59f855613e3d73d0e7192cd74cd4d3\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="840897fcd7223a8143f1d9b6f69714e7be34fd50">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\okio-1.11.0_bd8355a78926ff0e391826eddcda6c3cc9784432\classes.dex" />
+        sha1="70f23cb87278f89aa51e6f57e8f0fd5266572d95">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_a7079468a0b3e6a7f4e1d8d2915fa95a0336c18e.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.android\build-cache\cc79fdc2994e55d9618133d8f4ed381728c37d62\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\2076e32e2ef40dfe23d8367416860a51f37d1dfd\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="399f75732ff1ac159f9e73611536f1508bf18d3b">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_fed644e71ebdc6709c1ad28abc4271d4d6d809e0\classes.dex" />
+        sha1="d6a04527c17597019dad82777c5094a3d60d1c33">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_98e40764010b9838bf6103a9765ca5971822b048.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\81964bc2aef0798687551c0cb9dfcb4ea62c2a79\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\constraint-layout-solver-1.0.2_dce0f5dc4ec87302d879250c45fe5f3f72f02917\classes.dex" />
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_228f1c22a3b36a0f2768a92ea83d4f5e9f9f8a24.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\b9290fa139b679bf5a8660ad7d9d6ac6a7933f05\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_a49043960948b769651820254ea4b33dfe236d9f\classes.dex" />
+        sha1="a3e61044038fb54cddf6b8dc79f41d2b57f42caf">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_b3eaff9531865323ee72b0e257c217252e76a0e5.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\retrofit\2.2.0\41e67dba73c3347e4503761642c39d0e06ca1f2\retrofit-2.2.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="041e67dba73c3347e4503761642c39d0e06ca1f2">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\retrofit-2.2.0_7e11ef61ec414085c11c01cef2f48d6b4f7fd405\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="cc131a70a333bdf2745bc87618b79da8c203edbd">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_baeac42f81f511082a318af17231e4e2b61aeec6\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.android\build-cache\9487e416afb49f36e1e88dea8adbd32c13e54ae7\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\7a1ad85b29b21ac9bcd58a51427547dbc2406811\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="c5d103b270b3f3b50d8e6b44aa8e068b0de33426">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9dcbc7a612655edf199ed7e8d7d3619091fbab0d\classes.dex" />
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_f45cd010498c024b131baad14c2a3e17cef47cdc.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.android\build-cache\377dd581ec23ec2712799abc6535a7a026538b4f\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\17887706dc512ec0dc07d7a549a2ddbdb8222756\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="a1aa1dd9917e887bfe732cc5e561ae6ae8f9a84a">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3571681fda5d01490fdeeeed16a0bb2475211752\classes.dex" />
+        sha1="fbb206f7a119f66ce171d95aae1225a5b209a8b7">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_26f5dc83c69f1f678a3b0ca3277716a5f712b523.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.android\build-cache\81ade3972c3f9b9cc0fbc03cfc71c9c84743d587\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\38420926c2c8a9697b5e949c850e0ce58f54bedf\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="b215e312bdc1ee7bfda31674eab5df8bad45c014">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_a22298492e46f490c093282f74f0674866fc7f7a\classes.dex" />
+        sha1="518768f3200963fbfec652f498da2c9d39245234">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_25eda552e8af86e55281b02ce0ea96658d0d27b7.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.android\build-cache\55f7bb5d7509a6641521497b4c68e1afde1e6be6\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\bed5577a6388ab09fe961ae74eef878ea06bc550\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="888983f51cf34f57a93ff16832552f2f15937212">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_6ec16ea631da506fbb909eee559225fb8fed8446\classes.dex" />
+        sha1="9ab787a20aae245b5b3651ae0b9c38459eb37715">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_75e700994eba4fd7a40687a555ea4c74c69b96ca.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.android\build-cache\03faa03e0a0147c44481106037f97f4162f0eff1\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\7a5dc93dd9782d0de34b5937d9494f4672364151\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="0a5d5553c308643a9022f15513ebdd59e9c78d82">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_52ffc5c47ccc913fab8c8e4eef4e47b9efbc1d74\classes.dex" />
+        sha1="93c1199fcb0a34b980e6fff8350daff62e696ec2">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_b78ff89a7df0bb24b72fc8afa3f49c9a929207df.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.android\build-cache\2fa9bbfb7bc6620eeb8d506397ec2919715a3a3f\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\238da158452b4f13c24750c697407039ab9cadbc\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="bb115a110992b254f767f337da233071f6f940b8">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_68949ddccc51d45d8a09d33edcc8ef6bf742a5ba\classes.dex" />
+        sha1="4b746ef0fd46acb5aaf3d9ab9a4cec22c28d3211">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_03fb145b55c4bb2f19e95c50bd112faf343e99e8.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\converter-gson\2.2.0\a09926806199499a20b2f5168779499abfa33342\converter-gson-2.2.0.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\10762061df50af2a2f656b51ec1b70c79a7e8bf5\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="a09926806199499a20b2f5168779499abfa33342">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\converter-gson-2.2.0_ed3c2c61f686d11168ca3c96c7fab76758770e4e\classes.dex" />
+        sha1="93c10d68ab5ea070f15782ae6d3a28d1f1d8f45e">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_cb867635360ddbb974371a90d9da94ed77405f34.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.android\build-cache\58811df01c2469e7fa660a120b3277cfb23d133a\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\0ee2521b4e2778a7b826d8be45cce9189367b21d\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="6003d64df88a6ce5e961fa2bad7f1b9b97689ac1">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_e098072ac04c823ef527104296d72e9013303fde\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.6.0\69edde9fc4b01c9fd51d25b83428837478c27254\okhttp-3.6.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="69edde9fc4b01c9fd51d25b83428837478c27254">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\okhttp-3.6.0_e5c8224da43423fa21248a9bb8090a532e7de956\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.8.0\c4ba5371a29ac9b2ad6129b1d39ea38750043eff\gson-2.8.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="c4ba5371a29ac9b2ad6129b1d39ea38750043eff">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\gson-2.8.0_36cc687bba91026faee7599012988f18e7ab5706\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-annotations\8.5.1\bb67dad90bab7cd77a8f7f1b8442b47e3a2326bc\butterknife-annotations-8.5.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="bb67dad90bab7cd77a8f7f1b8442b47e3a2326bc">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\butterknife-annotations-8.5.1_191dc9f2272e7a1184329058c02660a033511227\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.android\build-cache\85196c578430a49554a43010c9c91eaec01b0a0f\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3ac20a300f6b50597b8356cb2a456b893f69c57b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.android\build-cache\169ef950eb7a07c9ab21242b9f30f68b4f28e513\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="19f281a785ca0eb5f6799fc7bf7ca199a9ca1e8b">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7d43c5ecf920e6ea9c56a5affe7fb2ad4dc91e71\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.android\build-cache\0d315131ead29c59da046eda75741ed2ea5d565d\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="19696dc358ac668e341f28c41e3387d61ccdb81d">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_051e872781aa366849d07d1aed3fc23b3a8e6b68\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\DEBAPRIYA\.android\build-cache\05235cfb1540f3a1b07a79256d2a9f62db0bc301\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="c7626a9aa507bbbdc16188bc9a9f9bf3370c1ddd">
-        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_06e77cf3c79771451f688f9f0c45821d317ce890\classes.dex" />
+        sha1="425c7b17887e5c3f8cbdf67ba171bc246f29b42c">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_4ca3fb5009deb670a8f8396019e63809118f70aa.jar" />
     </item>
 
 </items>

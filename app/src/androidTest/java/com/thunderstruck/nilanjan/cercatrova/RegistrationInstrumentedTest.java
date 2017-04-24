@@ -11,6 +11,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
@@ -32,20 +33,20 @@ public class RegistrationInstrumentedTest {
 
         onView(withId(R.id.firstname))
                 .perform(typeText("Ab12F"), closeSoftKeyboard());
-        onView(withId(R.id.email_sign_in_button)).perform(click());
-        onView(withId(R.id.email)).check(matches(hasFocus()));
+        onView(withId(R.id.register)).perform(scrollTo(), click());
+        onView(withId(R.id.firstname)).check(matches(hasFocus()));
 
-        onView(withId(R.id.email)).perform(clearText());
-        onView(withId(R.id.email))
+        onView(withId(R.id.firstname)).perform(scrollTo(), clearText());
+        onView(withId(R.id.firstname))
                 .perform(typeText(""), closeSoftKeyboard());
-        onView(withId(R.id.email_sign_in_button)).perform(click());
-        onView(withId(R.id.email)).check(matches(hasFocus()));
+        onView(withId(R.id.register)).perform(scrollTo(), click());
+        onView(withId(R.id.firstname)).check(matches(hasFocus()));
 
-        onView(withId(R.id.email)).perform(clearText());
-        onView(withId(R.id.email))
+        onView(withId(R.id.firstname)).perform(scrollTo(), clearText());
+        onView(withId(R.id.firstname))
                 .perform(typeText("a@world"), closeSoftKeyboard());
-        onView(withId(R.id.email_sign_in_button)).perform(click());
-        onView(withId(R.id.email)).check(matches(hasFocus()));
+        onView(withId(R.id.register)).perform(scrollTo(), click());
+        onView(withId(R.id.firstname)).check(matches(hasFocus()));
 
     }
 
