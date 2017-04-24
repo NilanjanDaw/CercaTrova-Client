@@ -114,23 +114,38 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private boolean validateLogin() {
-        if(!emailValidator(emailId.getText().toString()))
+        if(!emailValidator(emailId.getText().toString())) {
+            emailId.setError(getString(R.string.invalid_field));
             return false;
-        if(!phoneNoValidator(phoneNumber.getText().toString()))
+        }
+        if(!phoneNoValidator(phoneNumber.getText().toString())) {
+            phoneNumber.setError(getString(R.string.invalid_field));
             return false;
-        if(!nameValidator(firstName.getText().toString()))
+        }
+        if(!nameValidator(firstName.getText().toString())) {
+            firstName.setError(getString(R.string.invalid_field));
             return false;
-        if(!nameValidator(lastName.getText().toString()))
+        }
+        if(!nameValidator(lastName.getText().toString())) {
+            lastName.setError(getString(R.string.invalid_field));
             return false;
-        if(!adhaarNoValidator(adhaarNumber.getText().toString()))
+        }
+        if(!adhaarNoValidator(adhaarNumber.getText().toString())) {
+            adhaarNumber.setError(getString(R.string.invalid_field));
             return false;
-        if(!ageValidator(age.getText().toString()))
+        }
+        if(!ageValidator(age.getText().toString())) {
+            age.setError(getString(R.string.invalid_field));
             return false;
-        if(!bloodGroupValidator(bloodGroup.getText().toString()))
+        }
+        if(!bloodGroupValidator(bloodGroup.getText().toString())) {
+            bloodGroup.setError(getString(R.string.invalid_field));
             return false;
-        if(!passwordValidator(password.getText().toString()))
+        }
+        if(!passwordValidator(password.getText().toString())) {
+            password.setError(getString(R.string.invalid_field));
             return false;
-
+        }
         return true;
     }
 
