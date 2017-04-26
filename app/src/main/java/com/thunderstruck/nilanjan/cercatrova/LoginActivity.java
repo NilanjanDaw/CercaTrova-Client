@@ -51,7 +51,7 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-    public static final String TAG = "LoginActivity";
+    private static final String TAG = "LoginActivity";
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -247,7 +247,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    public boolean isPasswordValid(String password) {
+    private boolean isPasswordValid(String password) {
         return password.length() > 5;
     }
 

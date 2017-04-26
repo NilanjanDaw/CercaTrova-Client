@@ -1,21 +1,17 @@
 package com.thunderstruck.nilanjan.cercatrova;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,6 +19,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.thunderstruck.nilanjan.cercatrova.support.Constants;
 import com.thunderstruck.nilanjan.cercatrova.support.Emergency;
 import com.thunderstruck.nilanjan.cercatrova.support.EmergencyPersonnel;
@@ -49,9 +55,11 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
  */
 
 //TODO refactor to SRS nomenclature
-public class MainActivity extends AppCompatActivity implements LocationListener {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
-    public static final int REQUEST_ACCESS_LOCATION = 0;
+    private static final int REQUEST_ACCESS_LOCATION = 0;
+    private static final int REQUEST_CHECK_SETTINGS = 10;
     private static final String TAG = "MainActivity";
     @BindView(R.id.ambulance)
     Button ambulance;
@@ -59,9 +67,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     Button police;
     @BindView(R.id.fire_fighter)
     Button fireFighter;
-    LocationManager locationManager;
-    android.location.Location location;
-    User user;
+    private GoogleApiClient googleApiClient;
+    private LocationRequest locationRequest;
+    private LocationSettingsRequest locationSettingsRequest;
+    private android.location.Location location;
+    private User user;
     private int typeOfEmergency;
     private Endpoint apiService;
     private ProgressDialog progressDialog;
@@ -72,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         ButterKnife.bind(this);
         user = (User) getIntent().getSerializableExtra("profile_data");
         Log.d(TAG, "onCreate: " + user.getAdhaarNumber());
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         getLocation();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
@@ -85,30 +94,90 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         progressDialog.setMessage("Finding Help...");
     }
 
-    private void getLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-            mayRequestLocation();
-            return;
-        }
-        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            if (location != null)
-                Log.d(TAG, "getLocation: " + location.getLatitude() + " " + location.getLongitude());
-            else
-                Log.d(TAG, "getLocation: " + null);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 5, this);
-        } else {
-            requestGPS();
-        }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
-    private void requestGPS() {
-        Toast.makeText(getBaseContext(), R.string.permission_rationale_location, Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        startActivityForResult(intent, REQUEST_ACCESS_LOCATION);
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    private int getLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            mayRequestPermission();
+            return -1;
+        }
+        if (googleApiClient == null) {
+            buildGoogleClientApi();
+            createLocationRequest();
+            buildLocationSettingsRequest();
+            googleApiClient.connect();
+        }
+
+        startLocationUpdates();
+        return 0;
+    }
+
+    protected synchronized void buildGoogleClientApi() {
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    public void createLocationRequest() {
+        locationRequest = new LocationRequest();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    protected void buildLocationSettingsRequest() {
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        builder.addLocationRequest(locationRequest);
+        locationSettingsRequest = builder.build();
+    }
+
+    protected void startLocationUpdates() {
+        LocationServices.SettingsApi.checkLocationSettings(
+                googleApiClient,
+                locationSettingsRequest
+        ).setResultCallback(new ResultCallback<LocationSettingsResult>() {
+            @Override
+            public void onResult(@NonNull LocationSettingsResult locationSettingsResult) {
+                final Status status = locationSettingsResult.getStatus();
+                switch (status.getStatusCode()) {
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                                != PackageManager.PERMISSION_GRANTED) {
+                            mayRequestPermission();
+                            return;
+                        }
+                        LocationServices.FusedLocationApi.requestLocationUpdates(
+                                googleApiClient, locationRequest, MainActivity.this);
+                        break;
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        try {
+                            status.startResolutionForResult(MainActivity.this, REQUEST_CHECK_SETTINGS);
+                        } catch (IntentSender.SendIntentException e) {
+                            Log.i(TAG, "PendingIntent unable to execute request.");
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        String errorMessage = "Location settings are inadequate, and cannot be " +
+                                "fixed here. Fix in Settings.";
+                        Log.e(TAG, errorMessage);
+                        Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
     }
 
     @OnClick({ R.id.ambulance, R.id.fire_fighter, R.id.police})
@@ -124,39 +193,27 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        getLocation();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        locationManager.removeUpdates(this);
-    }
-
-    @Override
     public void onLocationChanged(android.location.Location location) {
         this.location = location;
         Log.d(TAG, "onLocationChanged: " + location.getLatitude() + " " + location.getLongitude());
     }
 
     @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 
     @Override
-    public void onProviderEnabled(String s) {
-
+    public void onConnected(@Nullable Bundle bundle) {
+        Log.d(TAG, "onConnected: Google client connected");
     }
 
     @Override
-    public void onProviderDisabled(String s) {
+    public void onConnectionSuspended(int i) {
 
     }
 
-    private boolean mayRequestLocation() {
+    private boolean mayRequestPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
         }
@@ -164,15 +221,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             return true;
         }
         if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION)) {
-            Snackbar.make(((Activity) getBaseContext()).findViewById(android.R.id.content),
-                    R.string.permission_rationale_location, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, new View.OnClickListener() {
-                        @Override
-                        @TargetApi(Build.VERSION_CODES.M)
-                        public void onClick(View v) {
-                            requestPermissions(new String[]{ACCESS_FINE_LOCATION}, REQUEST_ACCESS_LOCATION);
-                        }
-                    });
+            Toast.makeText(this, getString(R.string.permission_rationale_location), Toast.LENGTH_LONG).show();
+            requestPermissions(new String[]{ACCESS_FINE_LOCATION}, REQUEST_ACCESS_LOCATION);
         } else {
             requestPermissions(new String[]{ACCESS_FINE_LOCATION}, REQUEST_ACCESS_LOCATION);
         }
@@ -188,6 +238,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if (requestCode == REQUEST_ACCESS_LOCATION) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getLocation();
+            } else {
+                Toast.makeText(this, getString(R.string.permission_rationale_location), Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
     }
@@ -196,8 +249,19 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_ACCESS_LOCATION)
-            getLocation();
+        switch (requestCode) {
+            case REQUEST_CHECK_SETTINGS:
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+                        Log.d(TAG, "User agreed to make required location settings changes.");
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        Toast.makeText(this, getString(R.string.permission_rationale_location), Toast.LENGTH_SHORT).show();
+                        finish();
+                        break;
+                }
+                break;
+        }
     }
 
     private void showProgress(boolean show) {

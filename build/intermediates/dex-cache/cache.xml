@@ -21,57 +21,21 @@
     </item>
     <item
         is-multidex="false"
-        jar="C:\Users\nilan\.android\build-cache\2076e32e2ef40dfe23d8367416860a51f37d1dfd\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d6a04527c17597019dad82777c5094a3d60d1c33">
-        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_98e40764010b9838bf6103a9765ca5971822b048.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\nilan\.android\build-cache\81964bc2aef0798687551c0cb9dfcb4ea62c2a79\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_228f1c22a3b36a0f2768a92ea83d4f5e9f9f8a24.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\nilan\.android\build-cache\b9290fa139b679bf5a8660ad7d9d6ac6a7933f05\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="a3e61044038fb54cddf6b8dc79f41d2b57f42caf">
-        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_b3eaff9531865323ee72b0e257c217252e76a0e5.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\nilan\.android\build-cache\7a1ad85b29b21ac9bcd58a51427547dbc2406811\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="c5d103b270b3f3b50d8e6b44aa8e068b0de33426">
-        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_f45cd010498c024b131baad14c2a3e17cef47cdc.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\nilan\.android\build-cache\17887706dc512ec0dc07d7a549a2ddbdb8222756\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="fbb206f7a119f66ce171d95aae1225a5b209a8b7">
-        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_26f5dc83c69f1f678a3b0ca3277716a5f712b523.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="C:\Users\nilan\.android\build-cache\38420926c2c8a9697b5e949c850e0ce58f54bedf\output\jars\classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="518768f3200963fbfec652f498da2c9d39245234">
         <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_25eda552e8af86e55281b02ce0ea96658d0d27b7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\2076e32e2ef40dfe23d8367416860a51f37d1dfd\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d6a04527c17597019dad82777c5094a3d60d1c33">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_98e40764010b9838bf6103a9765ca5971822b048.jar" />
     </item>
     <item
         is-multidex="false"
@@ -93,6 +57,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\81964bc2aef0798687551c0cb9dfcb4ea62c2a79\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_228f1c22a3b36a0f2768a92ea83d4f5e9f9f8a24.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="C:\Users\nilan\.android\build-cache\238da158452b4f13c24750c697407039ab9cadbc\output\jars\classes.jar"
         jumboMode="false"
         optimize="true"
@@ -102,12 +75,57 @@
     </item>
     <item
         is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\b9290fa139b679bf5a8660ad7d9d6ac6a7933f05\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a3e61044038fb54cddf6b8dc79f41d2b57f42caf">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_b3eaff9531865323ee72b0e257c217252e76a0e5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\7a1ad85b29b21ac9bcd58a51427547dbc2406811\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c5d103b270b3f3b50d8e6b44aa8e068b0de33426">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_f45cd010498c024b131baad14c2a3e17cef47cdc.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4621419ceb0aea39c1d6f3301bafe651cbf9ba8b">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_152da76de937890d80b22c7f3caac88d273dd451\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nilan\.android\build-cache\17887706dc512ec0dc07d7a549a2ddbdb8222756\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fbb206f7a119f66ce171d95aae1225a5b209a8b7">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_26f5dc83c69f1f678a3b0ca3277716a5f712b523.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="C:\Users\nilan\.android\build-cache\10762061df50af2a2f656b51ec1b70c79a7e8bf5\output\jars\classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="93c10d68ab5ea070f15782ae6d3a28d1f1d8f45e">
         <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\pre-dexed\debug\classes_cb867635360ddbb974371a90d9da94ed77405f34.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
+        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_d3b52aa5ed2288731dd6752f38f91b9a9d1a9511\classes.dex" />
     </item>
     <item
         is-multidex="false"
