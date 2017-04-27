@@ -69,6 +69,26 @@ public class MainInstrumentedTest {
                     check(matches(isDisplayed()));
     }
 
+    @Test
+    public void testAmbulance() throws Exception {
+        onView(withId(R.id.ambulance)).perform(click());
+        onView(withText(startsWith("Failed to find help. Please Try again"))).
+                inRoot(withDecorView(
+                        not(is(mActivityRule.getActivity().
+                                getWindow().getDecorView())))).
+                check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testFireFighter() throws Exception {
+        onView(withId(R.id.fire_fighter)).perform(click());
+        onView(withText(startsWith("Failed to find help. Please Try again"))).
+                inRoot(withDecorView(
+                        not(is(mActivityRule.getActivity().
+                                getWindow().getDecorView())))).
+                check(matches(isDisplayed()));
+    }
+
 }
 
 
