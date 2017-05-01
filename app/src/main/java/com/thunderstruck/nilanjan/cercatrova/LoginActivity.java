@@ -128,8 +128,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 .build();
         //Create an implementation of the API endpoints defined by the service interface.
         apiService = retrofit.create(Endpoint.class);
-        /**
-         * Clicking on the sign up button will forward the user to the registration page
+        /*
+          Clicking on the sign up button will forward the user to the registration page
          */
         Button signUp = (Button) findViewById(R.id.link_signup);
         signUp.setOnClickListener(new OnClickListener() {
@@ -249,8 +249,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                  * If the user's information provided is not null, the progress dialog disappears
                  * and it takes to the next GUI screen
                  * Otherwise, a message is displayed that the user failed to login
-                 *  @param call
-                 * @param response
                  */
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
