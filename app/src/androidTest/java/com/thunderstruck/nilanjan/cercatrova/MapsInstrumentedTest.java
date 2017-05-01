@@ -54,7 +54,7 @@ public class MapsInstrumentedTest {
             Location location1 = new Location("Point", arrayList1);
             User user = new User("222244445555", "Dia", "Paul", "p20@gmail.com", "9831141355", "earth", 21, "F", "A+", "abc123",
                     location, "dev12345");
-            EmergencyPersonnel emergencyPersonnel = new EmergencyPersonnel("P7942","111122223333","Debapriya","Paul","912345678","WB241977",
+            EmergencyPersonnel emergencyPersonnel = new EmergencyPersonnel("P7942","111122223333","Debapriya","Paul","9831141377","WB241977",
                     1 ,"Kankurgachi",location1);
             Context targetContext = InstrumentationRegistry.getInstrumentation()
                     .getTargetContext();
@@ -69,10 +69,10 @@ public class MapsInstrumentedTest {
     @Test
     public void testPersonnel_details() throws Exception {
         Thread.sleep(3000);
-        onView((withId(R.id.name))).check(matches(withText("Debapriya Paul")));
-        onView((withId(R.id.id))).check(matches(withText("P7942")));
-        onView((withId(R.id.base))).check(matches(withText("Kankurgachi")));
-        onView((withId(R.id.car_number))).check(matches(withText("WB241977")));
+        onView((withId(R.id.name))).check(matches(withText("Name: Debapriya Paul")));
+        onView((withId(R.id.id))).check(matches(withText("ID: P7942")));
+        onView((withId(R.id.base))).check(matches(withText("Base Station: Kankurgachi")));
+        onView((withId(R.id.car_number))).check(matches(withText("Car Number: WB241977")));
     }
 
     @Test
