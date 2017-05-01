@@ -27,9 +27,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Registration UI Activity
+ * @author Debapriya and Nilanjan
+ */
 public class RegistrationActivity extends AppCompatActivity {
 
-    public static final String TAG = "RegistrationActivity";
     @BindView(R.id.firstname) EditText firstName;
     @BindView(R.id.lastname) EditText lastName;
     @BindView(R.id.phone_number) EditText phoneNumber;
@@ -44,6 +47,11 @@ public class RegistrationActivity extends AppCompatActivity {
     private Endpoint apiService;
     private ProgressDialog progressDialog;
 
+    /**
+     * Perform initialization of all fragments and loaders.
+     * @param savedInstanceState is a Bundle object containing the activity's previously saved state.
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,25 +65,44 @@ public class RegistrationActivity extends AppCompatActivity {
             }
 
         });
+        /*
+        When the user clicks on the register button after entering the valid credentials,
+        a progress dialog is set and a 'Registering' message is displayed.
+         */
         progressDialog = new ProgressDialog(RegistrationActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Registering on our network #feelBlessed...");
 
+        /*
+          Retrofit is a type-safe REST client for Android, used for interacting with the APIs and sending network requests
+         */
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+        //Create an implementation of the API endpoints defined by the service interface.
         apiService = retrofit.create(Endpoint.class);
     }
 
+    /**
+     *If valid credentials are provided, the user details are stored which is carried forward in the next GUI
+     */
     private void attemptLogin() {
         if (validateLogin()) {
             
             User user = getDetails();
             progressDialog.show();
+            //An invocation of a Retrofit method that sends a request to a web server and returns a response.
             Call<User> call = apiService.createUser(user);
+            //Calls have been handled asynchronously with enqueue method
             call.enqueue(new Callback<User>() {
+                /**
+                 * onResponse method is invoked for a received HTTP response.
+                 * @param call creates a new, identical call to this one which can be enqueued
+                 *             or executed even if this call has already been.
+                 * @param response synchronously sends the request and returns its response.
+                 */
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     progressDialog.dismiss();
@@ -86,6 +113,11 @@ public class RegistrationActivity extends AppCompatActivity {
                     finish();
                 }
 
+                /**
+                 * onFailure method is invoked when a network exception occurred talking to the server
+                 * or when an unexpected exception occurred creating the request or processing the response.
+                 * Displays a toast indicating the registration failed
+                 */
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
                     progressDialog.dismiss();
@@ -100,6 +132,9 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Instantiating and returning a new user object
+     */
     private User getDetails() {
         int selectedId = gender.getCheckedRadioButtonId();
         RadioButton radioButton = (RadioButton) findViewById(selectedId);
@@ -109,6 +144,10 @@ public class RegistrationActivity extends AppCompatActivity {
                 Integer.parseInt(age.getText().toString()), gender, bloodGroup.getText().toString(), password.getText().toString());
     }
 
+    /**
+     * validation of credentials entered by the user is done by pattern matching
+     * Otherwise an error message is displayed indicating the particular field is invalid
+     */
     private boolean validateLogin() {
         int ctr = 0;
         if(!emailValidator(emailId.getText().toString())) {
@@ -146,6 +185,9 @@ public class RegistrationActivity extends AppCompatActivity {
         return (ctr == 0);
     }
 
+    /**
+     * the below section contains the various validators that have been performed with pattern matching
+     */
     private boolean emailValidator(String emailId)
     {
         return !Objects.equals(emailId, "") && android.util.Patterns.EMAIL_ADDRESS.matcher(emailId).matches();

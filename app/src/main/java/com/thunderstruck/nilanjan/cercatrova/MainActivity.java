@@ -50,7 +50,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 /**
- * Created by nilanjan on 09-Apr-17.
+ * Created by Nilanjan and Debapriya on 09-Apr-17.
  * Project CercaTrova
  */
 
@@ -75,6 +75,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private int typeOfEmergency;
     private Endpoint apiService;
     private ProgressDialog progressDialog;
+
+    /**
+     * Perform initialization of all fragments and loaders.
+     * @param savedInstanceState is a Bundle object containing the activity's previously saved state.
+     * When the user clicks on appropriate emergency type, a progress dialog is displayed with the message
+     * that the nearest helping unit is being searched for.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,10 +90,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         user = (User) getIntent().getSerializableExtra("profile_data");
         Log.d(TAG, "onCreate: " + user.getAdhaarNumber());
         getLocation();
+        /*
+          Retrofit is a type-safe REST client for Android, used for interacting with the APIs and sending network requests
+         */
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+        //Create an implementation of the API endpoints defined by the service interface.
         apiService = retrofit.create(Endpoint.class);
         progressDialog = new ProgressDialog(MainActivity.this,
                 R.style.AppTheme_Dark_Dialog);
@@ -94,16 +105,27 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         progressDialog.setMessage("Finding Help...");
     }
 
+    /**
+     * When the activity enters the Resumed state, it comes to the foreground, and then the system invokes the onResume() callback
+     * In this state, the user interacts with the app.
+     */
     @Override
     protected void onResume() {
         super.onResume();
     }
 
+    /**
+     * When an interruptive event occurs, the activity enters the Paused state, and the system invokes the onPause() callback.
+     */
     @Override
     protected void onPause() {
         super.onPause();
     }
 
+    /**
+     * checks if the user has turned on the location updates
+     * If not, enable the location settings.
+     */
     private int getLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -122,6 +144,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         return 0;
     }
 
+    /**
+     * The Google API Client provides a common entry point to all the Google Play services
+     * and manages the network connection between the user's device and each Google service.
+     */
     protected synchronized void buildGoogleClientApi() {
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -143,6 +169,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         locationSettingsRequest = builder.build();
     }
 
+    /**
+     * Checks if the user's location is on and permissions are granted for acquiring the location.
+     * If yes, the location is acquired.
+     * If no, an error message indicating the same is displayed.
+     */
     protected void startLocationUpdates() {
         LocationServices.SettingsApi.checkLocationSettings(
                 googleApiClient,
@@ -192,17 +223,25 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         new EmergencyNotificationTask().execute();
     }
 
+    /**
+     * gets the latitude and longitude of the user's location
+     */
     @Override
     public void onLocationChanged(android.location.Location location) {
         this.location = location;
         Log.d(TAG, "onLocationChanged: " + location.getLatitude() + " " + location.getLongitude());
     }
 
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 
+    /**
+     * on being connected, displays an appropriate message on the log
+     * @param bundle
+     */
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Log.d(TAG, "onConnected: Google client connected");
@@ -283,8 +322,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         @Override
         protected EmergencyPersonnel doInBackground(Object... voids) {
 
+            //waiting for a location update
             waitForLocationUpdate();
-
+            //creating the user's location update
             com.thunderstruck.nilanjan.cercatrova.support.Location userLocation;
             ArrayList<Double> coordinates = new ArrayList<>();
             coordinates.add(location.getLatitude());
@@ -295,11 +335,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             final int status[] = new int[1];
             updateUserProfile(user.getEmailId(), locationString);
             //TODO consider moving code to new method
+            //An emergency packet is created and sent to the web server.
             Emergency emergency = new Emergency(user.getAdhaarNumber(), typeOfEmergency, locationString);
             Call<EmergencyPersonnel> call = apiService.notifyEmergency(emergency);
             final EmergencyPersonnel[] personnel = new EmergencyPersonnel[1];
             status[0] = 0;
             call.enqueue(new Callback<EmergencyPersonnel>() {
+                /**
+                 * onResponse method is invoked for a received HTTP response.
+                 * @param call creates a new, identical call to this one which can be enqueued
+                 *             or executed even if this call has already been.
+                 * @param response synchronously sends the request and returns its response.
+                 * The personnel id is displayed on the log.
+                 */
                 @Override
                 public void onResponse(Call<EmergencyPersonnel> call, Response<EmergencyPersonnel> response) {
                     personnel[0] = response.body();
@@ -307,6 +355,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                         Log.d(TAG, "onResponse: personnelID " + personnel[0].getPersonnelId());
                     status[0] = 1;
                 }
+
+                /**
+                 * onFailure method is invoked when a network exception occurred talking to the server
+                 * or when an unexpected exception occurred creating the request or processing the response.
+                 */
 
                 @Override
                 public void onFailure(Call<EmergencyPersonnel> call, Throwable t) {
@@ -324,10 +377,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
             }
 
+            //gets the details of the personnel who is nearest to the user
             return personnel[0];
         }
 
+
         private void updateUserProfile(String userID, String location) {
+             /*
+            shared preferences allows to save and retrieve data in the form of key, value pair
+            the first parameter is the key, second parameter is the mode
+            the device id will be saved in the shared preferences.
+         */
             SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.shared_preference_file), MODE_PRIVATE);
             String deviceID = "";
             while (deviceID.equals("")) {
@@ -340,6 +400,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     e.printStackTrace();
                 }
             }
+            // a packet consisting od user id, user's location and the device id is sent to the web server.
             UpdatePacket packet = new UpdatePacket(userID, location, deviceID);
             Call<User> updateProfile = apiService.updateProfile(packet);
             updateProfile.enqueue(new Callback<User>() {
@@ -356,6 +417,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         }
 
+        /**
+         * waits for location updates
+         */
         private void waitForLocationUpdate() {
 
             while (location == null) {
@@ -368,6 +432,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         }
 
+        /**
+         * If help has been found, the user data and the emergency personnel's data are sent to the next GUI screen
+         * Otherwise, a toast indicating failure is displayed.
+         */
         @Override
         protected void onPostExecute(EmergencyPersonnel emergencyPersonnel) {
             super.onPostExecute(emergencyPersonnel);

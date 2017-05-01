@@ -47,7 +47,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
- * @author Nilanjan Daw
+ * @author Nilanjan and Debapriya
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
@@ -64,19 +64,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private SharedPreferences sharedPreferences;
     private Button signUp;
 
+    /**
+     * Perform initialization of all fragments and loaders.
+     * @param savedInstanceState is a Bundle object containing the activity's previously saved state.
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        //Email id has been made an editable text view that shows completion suggestions automatically while the user is typing.
         populateAutoComplete();
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    attemptLogin(); //attemptLogin() method is invoked
                     return true;
                 }
                 return false;
@@ -91,24 +97,42 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+        /*
+         shared preferences allows to save and retrieve data in the form of key, value pair
+          the first parameter is the key, second parameter is the mode
+          the user id and the password will be saved in the shared preferences once the sign in button is pressed
+         */
         sharedPreferences = this.getSharedPreferences(getString(R.string.shared_preference_file), MODE_PRIVATE);
+        //
         if (sharedPreferences.contains("user_id") && sharedPreferences.contains("password")) {
             mEmailView.setText(sharedPreferences.getString("user_id", ""));
             mPasswordView.setText(sharedPreferences.getString("password", ""));
             Log.d(TAG, "onCreate: shared " + sharedPreferences.getString("user_id", ""));
         }
 
+        /*
+          A dialog showing a progress indicator with the text 'Authenticating' will be displayed
+          after the sign in button has been pressed
+         */
+
         progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage(getString(R.string.authenticating));
 
+        /*
+          Retrofit is a type-safe REST client for Android, used for interacting with the APIs and sending network requests
+         */
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+        //Create an implementation of the API endpoints defined by the service interface.
         apiService = retrofit.create(Endpoint.class);
         signUp = (Button) findViewById(R.id.link_signup);
+        /**
+         * Clicking on the sign up button will forward the user to the registration page
+         */
         signUp.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,6 +151,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         getLoaderManager().initLoader(0, null, this);
     }
+
+
 
     private boolean mayRequestContacts() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -165,7 +191,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
+     * Attempts to sign in the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
@@ -212,10 +238,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             editor.putString("user_id", email);
             editor.putString("password", password);
             editor.apply();
+            /*
+            Invoking the API to perform the registration
+             */
             AuthenticationPacket packet = new AuthenticationPacket(email, password);
             Call<User> call = apiService.validateLogin(packet);
             call.enqueue(new Callback<User>() {
 
+                /**
+                 * onResponse method is invoked for a received HTTP response.
+                 * If the user's information provided is not null, the progress dialog disappears
+                 * and it takes to the next GUI screen
+                 * Otherwise, a message is displayed that the user failed to login
+                 *  @param call
+                 * @param response
+                 */
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     User user = response.body();
@@ -232,6 +269,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     }
                 }
 
+                /**
+                 * onFailure method is invoked when a network exception occurred talking to the server
+                 * or when an unexpected exception occurred creating the request or processing the response.
+                 * Displays a toast indicating the login failed
+                 */
+
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
                     Log.d(TAG, "onFailure: Failed");
@@ -243,9 +286,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+    /*
+    email validation performed
+     */
     private boolean isEmailValid(String email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
+
+    /*
+    password validation performed
+     */
 
     private boolean isPasswordValid(String password) {
         return password.length() > 5;

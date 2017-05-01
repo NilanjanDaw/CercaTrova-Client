@@ -5,10 +5,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -44,25 +40,33 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
+/**
+ * Maps UI Activity
+ * @author Nilanjan and Debapriya
+ */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     public static final int REQUEST_ACCESS_LOCATION = 0;
     public static final String TAG = "MapsActivity";
-    private GoogleMap mMap;
-    private GoogleApiClient mGoogleApiClient;
-    private User user;
-    private EmergencyPersonnel emergencyPersonnel;
     @BindView(R.id.name) TextView name;
     @BindView(R.id.id) TextView id;
     @BindView(R.id.car_number) TextView carNumber;
     @BindView(R.id.base) TextView base;
     @BindView(R.id.contact) Button contact;
+    private GoogleMap mMap;
+    private GoogleApiClient mGoogleApiClient;
+    private User user;
+    private EmergencyPersonnel emergencyPersonnel;
 
+    /**
+     * Perform initialization of all fragments and loaders.
+     * @param savedInstanceState is a Bundle object containing the activity's previously saved state.
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +96,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
+    /**
+     * When the activity enters the Resumed state, it comes to the foreground, and then the system invokes the onResume() callback
+     * In this state, the user interacts with the app.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -100,6 +108,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /**
+     * When an interruptive event occurs, the activity enters the Paused state, and the system invokes the onPause() callback.
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -111,18 +122,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        //creating user location object
         LatLng userLocation = new LatLng(user.getLocation().getCoordinates().get(0),
                 user.getLocation().getCoordinates().get(1));
+        //creating personnel location object
         LatLng personnelLocation = new LatLng(emergencyPersonnel.getLocation().getCoordinates().get(0),
                 emergencyPersonnel.getLocation().getCoordinates().get(1)
                 );
+        //instantiating personnel location bitmap marker
         BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.policecar);
+        //marking personnel location and moving camera focus to user's location
         mMap.addMarker(new MarkerOptions().position(personnelLocation).icon(bitmapDescriptor));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15f));
         getLocationUpdate();
     }
 
+    /**
+     * Setting up location update
+     */
     private void getLocationUpdate() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             mayRequestLocation();
@@ -132,6 +149,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         buildGoogleApiClient();
     }
 
+    /**
+     * Connecting to Google's location API Client
+     */
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -141,6 +161,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mGoogleApiClient.connect();
     }
 
+    /**
+     * dynamically requesting permission for accessing GPS location
+     * @return status of the permission
+     */
     private boolean mayRequestLocation() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
@@ -177,6 +201,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /**
+     * method invoked on receiving GPS update
+     * @param location object containing new GPS coordinates
+     */
     @Override
     public void onLocationChanged(Location location) {
         //TODO update server about user location update
@@ -184,11 +212,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ArrayList<Double> coordinates = new ArrayList<>();
         coordinates.add(location.getLatitude());
         coordinates.add(location.getLongitude());
+        //updating user location according to new GPS coordinates
         userLocation = new com.thunderstruck.nilanjan.cercatrova.support.Location("POINT", coordinates);
         user.setLocation(userLocation);
         Log.d(TAG, "onLocationChanged: " + location.getLatitude() + " " + location.getLongitude());
     }
 
+    /**
+     * Callback method invoked on successful Google API connection
+     * Location update request callbacks have started
+     * @param bundle connection details
+     */
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         LocationRequest mLocationRequest = new LocationRequest();
