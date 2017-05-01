@@ -1,7 +1,11 @@
 package com.thunderstruck.nilanjan.cercatrova;
 
+import android.app.Activity;
+import android.support.test.espresso.NoMatchingViewException;
+import android.support.test.espresso.ViewAssertion;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.View;
 
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
@@ -20,10 +24,12 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.core.StringStartsWith.startsWith;
 
 /**
  * Created by nilanjan on 28-Apr-17.
@@ -36,8 +42,6 @@ public class IntegrationTesting {
 
     @Rule
     public IntentsTestRule <LoginActivity> mLoginActivityRule = new IntentsTestRule<>(LoginActivity.class);
-    @Rule
-    public IntentsTestRule<MainActivity> mMainActivityRule = new IntentsTestRule<>(MainActivity.class);
 
     @Test
     public void a_testLoginUserName() throws Exception {
@@ -121,4 +125,66 @@ public class IntegrationTesting {
         onView(withId(R.id.email_sign_in_button)).perform(click());
         intended(hasComponent(MainActivity.class.getName()));
     }
+
+    @Test
+    public void e_testAmbulance() throws Exception {
+        onView(withId(R.id.email)).perform(clearText());
+        onView(withId(R.id.password)).perform(clearText());
+        onView(withId(R.id.email))
+                .perform(typeText("a@world.com"), closeSoftKeyboard());
+        onView(withId(R.id.password)).perform(typeText("abc123"), closeSoftKeyboard());
+        onView(withId(R.id.email_sign_in_button)).perform(click());
+        onView(withId(R.id.ambulance)).perform(click());
+        Activity activity = getCurrentActivity();
+        onView(withText(startsWith("Failed to find help. Please Try again"))).
+                inRoot(withDecorView(
+                        not(is(activity.getWindow().getDecorView())))).
+                check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void f_testFireFighter() throws Exception {
+        onView(withId(R.id.email)).perform(clearText());
+        onView(withId(R.id.password)).perform(clearText());
+        onView(withId(R.id.email))
+                .perform(typeText("a@world.com"), closeSoftKeyboard());
+        onView(withId(R.id.password)).perform(typeText("abc123"), closeSoftKeyboard());
+        onView(withId(R.id.email_sign_in_button)).perform(click());
+        onView(withId(R.id.fire_fighter)).perform(click());
+        Activity activity = getCurrentActivity();
+        onView(withText(startsWith("Failed to find help. Please Try again"))).
+                inRoot(withDecorView(
+                        not(is(activity.getWindow().getDecorView())))).
+                check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void g_testPolice() throws Exception {
+        onView(withId(R.id.email)).perform(clearText());
+        onView(withId(R.id.password)).perform(clearText());
+        onView(withId(R.id.email))
+                .perform(typeText("a@world.com"), closeSoftKeyboard());
+        onView(withId(R.id.password)).perform(typeText("abc123"), closeSoftKeyboard());
+        onView(withId(R.id.email_sign_in_button)).perform(click());
+        onView(withId(R.id.police)).perform(click());
+        intended(hasComponent(MapsActivity.class.getName()));
+    }
+
+    @Test
+    public void h_MapsActivityTest() throws Exception {
+
+    }
+
+    private Activity getCurrentActivity() {
+        final Activity[] activity = new Activity[1];
+        onView(isRoot()).check(new ViewAssertion() {
+            @Override
+            public void check(View view, NoMatchingViewException noViewFoundException) {
+                activity[0] = (Activity) view.getContext();
+            }
+        });
+        return activity[0];
+    }
+
+
 }
