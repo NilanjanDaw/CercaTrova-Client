@@ -62,7 +62,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private ProgressDialog progressDialog;
     private Endpoint apiService;
     private SharedPreferences sharedPreferences;
-    private Button signUp;
 
     /**
      * Perform initialization of all fragments and loaders.
@@ -129,10 +128,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 .build();
         //Create an implementation of the API endpoints defined by the service interface.
         apiService = retrofit.create(Endpoint.class);
-        signUp = (Button) findViewById(R.id.link_signup);
         /**
          * Clicking on the sign up button will forward the user to the registration page
          */
+        Button signUp = (Button) findViewById(R.id.link_signup);
         signUp.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -265,7 +264,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         finish();
                     } else {
                         showProgress(false);
-                        Toast.makeText(getBaseContext(), "Unfortunately Login Failed", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Login Failed", Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -351,9 +350,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView.setAdapter(adapter);
     }
 
-    public boolean testHelperEmailValidator(String email) {
-        return isEmailValid(email);
-    }
+
 
     private interface ProfileQuery {
         String[] PROJECTION = {

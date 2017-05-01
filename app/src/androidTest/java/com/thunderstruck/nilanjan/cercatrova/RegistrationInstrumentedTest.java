@@ -196,7 +196,7 @@ public class RegistrationInstrumentedTest {
 
         onView(withId(R.id.adhaar_number)).perform(scrollTo(), clearText());
         onView(withId(R.id.adhaar_number))
-                .perform(typeText("9632574896523456"), closeSoftKeyboard());
+                .perform(typeText("9632574896523406"), closeSoftKeyboard());
         onView(withId(R.id.register)).perform(scrollTo(), click());
         onView(withId(R.id.adhaar_number)).check(matches(withError(
                 mActivityRule.getActivity().getString(R.string.invalid_field))));
@@ -287,10 +287,10 @@ public class RegistrationInstrumentedTest {
         onView(withId(R.id.lastname)).perform(scrollTo(), typeText("Paul"), closeSoftKeyboard());
         onView(withId(R.id.phone_number))
                 .perform(scrollTo(), typeText("9831141366"), closeSoftKeyboard());
-        onView(withId(R.id.email_id)).perform(scrollTo(), typeText("paul12@gmail.com"), closeSoftKeyboard());
+        onView(withId(R.id.email_id)).perform(scrollTo(), typeText("paul120@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.address))
                 .perform(scrollTo(), typeText("46, Bangur Avenue"), closeSoftKeyboard());
-        onView(withId(R.id.adhaar_number)).perform(scrollTo(), typeText("222255557778"), closeSoftKeyboard());
+        onView(withId(R.id.adhaar_number)).perform(scrollTo(), typeText("222255550078"), closeSoftKeyboard());
         onView(withId(R.id.age))
                 .perform(scrollTo(), typeText("21"), closeSoftKeyboard());
         onView(withId(R.id.female)).perform(scrollTo(), click());
