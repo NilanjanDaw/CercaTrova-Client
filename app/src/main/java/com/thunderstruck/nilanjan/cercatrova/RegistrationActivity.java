@@ -226,7 +226,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private boolean ageValidator(String age)
     {
-        return !Objects.equals(age, "") && age.matches("^[0]?[1-9]+$");
+        return !Objects.equals(age, "") && age.matches("^[1-9]?[0-9]{2}$");
     }
 
     private boolean bloodGroupValidator(String bloodGroup)

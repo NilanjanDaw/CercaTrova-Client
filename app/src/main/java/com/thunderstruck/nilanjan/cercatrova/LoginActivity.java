@@ -113,6 +113,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
           A dialog showing a progress indicator with the text 'Authenticating' will be displayed
           after the sign in button has been pressed
          */
+
         progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
@@ -127,8 +128,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 .build();
         //Create an implementation of the API endpoints defined by the service interface.
         apiService = retrofit.create(Endpoint.class);
-        /**
-         * Clicking on the sign up button will forward the user to the registration page
+        /*
+          Clicking on the sign up button will forward the user to the registration page
          */
         Button signUp = (Button) findViewById(R.id.link_signup);
         signUp.setOnClickListener(new OnClickListener() {
@@ -151,10 +152,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
 
-    /**
-     * handling dynamic permission for acquiring contact details
-     * @return status
-     */
+
     private boolean mayRequestContacts() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
@@ -240,7 +238,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             editor.putString("password", password);
             editor.apply();
             /*
-            Invoking the API to perform the login
+            Invoking the API to perform the registration
              */
             AuthenticationPacket packet = new AuthenticationPacket(email, password);
             Call<User> call = apiService.validateLogin(packet);
@@ -251,9 +249,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                  * If the user's information provided is not null, the progress dialog disappears
                  * and it takes to the next GUI screen
                  * Otherwise, a message is displayed that the user failed to login
-                 * @param call creates a new, identical call to this one which can be enqueued
-                 *             or executed even if this call has already been.
-                 * @param response synchronously sends the request and returns its response.
                  */
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
