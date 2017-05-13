@@ -12,11 +12,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -49,6 +52,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
+//import android.support.v4.app.ActivityCompatApi23;
+
 /**
  * Created by Nilanjan and Debapriya on 09-Apr-17.
  * Project CercaTrova
@@ -61,12 +66,22 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private static final int REQUEST_ACCESS_LOCATION = 0;
     private static final int REQUEST_CHECK_SETTINGS = 10;
     private static final String TAG = "MainActivity";
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 10;
     @BindView(R.id.ambulance)
     Button ambulance;
     @BindView(R.id.police)
     Button police;
     @BindView(R.id.fire_fighter)
     Button fireFighter;
+    @BindView(R.id.emergency_name)
+    EditText emergencyName;
+    @BindView(R.id.emergency_number)
+    EditText emergencyNumber;
+    @BindView(R.id.firstname)
+    EditText firstName;
+    @BindView(R.id.lastname)
+    EditText lastName;
+    String emergencyNo = emergencyNumber.getText().toString();
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private LocationSettingsRequest locationSettingsRequest;
@@ -78,9 +93,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     /**
      * Perform initialization of all fragments and loaders.
+     *
      * @param savedInstanceState is a Bundle object containing the activity's previously saved state.
-     * When the user clicks on appropriate emergency type, a progress dialog is displayed with the message
-     * that the nearest helping unit is being searched for.
+     *                           When the user clicks on appropriate emergency type, a progress dialog is displayed with the message
+     *                           that the nearest helping unit is being searched for.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +129,23 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onResume() {
         super.onResume();
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    void sendSMSmessage() {
+
+        if (checkSelfPermission(Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (shouldShowRequestPermissionRationale(Manifest.permission.SEND_SMS)) {
+                requestPermissions(new String[]{Manifest.permission.SEND_SMS},
+                        MY_PERMISSIONS_REQUEST_SEND_SMS);
+            } else {
+                requestPermissions(new String[]{Manifest.permission.SEND_SMS},
+                        MY_PERMISSIONS_REQUEST_SEND_SMS);
+            }
+        }
+    }
+
+
 
     /**
      * When an interruptive event occurs, the activity enters the Paused state, and the system invokes the onPause() callback.
@@ -211,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     }
 
-    @OnClick({ R.id.ambulance, R.id.fire_fighter, R.id.police})
+    @OnClick({R.id.ambulance, R.id.fire_fighter, R.id.police})
     public void notify(View view) {
         if (view.getId() == R.id.ambulance)
             typeOfEmergency = 2;
@@ -240,6 +273,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     /**
      * on being connected, displays an appropriate message on the log
+     *
      * @param bundle
      */
     @Override
@@ -274,12 +308,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
+
         if (requestCode == REQUEST_ACCESS_LOCATION) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getLocation();
             } else {
                 Toast.makeText(this, getString(R.string.permission_rationale_location), Toast.LENGTH_SHORT).show();
                 finish();
+            }
+        } else if (requestCode == MY_PERMISSIONS_REQUEST_SEND_SMS) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             }
         }
     }
@@ -439,6 +478,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         @Override
         protected void onPostExecute(EmergencyPersonnel emergencyPersonnel) {
             super.onPostExecute(emergencyPersonnel);
+
+            String message = firstName.getText().toString() + lastName.getText().toString() + "is in trouble. " +
+                    "For accessing his/her location, click http://maps.google.com/?q=" + user.getLocation().getCoordinates().get(0)
+                    + "," + user.getLocation().getCoordinates().get(1);
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(emergencyNo, null, message, null, null);
+            Toast.makeText(getApplicationContext(), "SMS sent.",
+                    Toast.LENGTH_LONG).show();
+
             if (emergencyPersonnel != null) {
                 Intent intent = new Intent(getBaseContext(), MapsActivity.class);
                 intent.putExtra("profile_data", user);
@@ -450,5 +498,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 Toast.makeText(MainActivity.this, "Failed to find help. Please Try again!", Toast.LENGTH_SHORT).show();
             }
         }
+
     }
 }

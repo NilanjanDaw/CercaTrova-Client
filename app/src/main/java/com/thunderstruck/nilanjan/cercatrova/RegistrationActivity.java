@@ -43,6 +43,8 @@ public class RegistrationActivity extends AppCompatActivity {
     @BindView(R.id.gender) RadioGroup gender;
     @BindView(R.id.blood_group) EditText bloodGroup;
     @BindView(R.id.password) EditText password;
+    @BindView(R.id.emergency_name) EditText emergencyName;
+    @BindView(R.id.emergency_number) EditText emergencyNumber;
     @BindView(R.id.register) Button register;
     private Endpoint apiService;
     private ProgressDialog progressDialog;
@@ -141,7 +143,8 @@ public class RegistrationActivity extends AppCompatActivity {
         String gender = radioButton.getText().toString();
         return new User(adhaarNumber.getText().toString(), firstName.getText().toString(), lastName.getText().toString(),
                 emailId.getText().toString(), phoneNumber.getText().toString(), address.getText().toString(),
-                Integer.parseInt(age.getText().toString()), gender, bloodGroup.getText().toString(), password.getText().toString());
+                Integer.parseInt(age.getText().toString()), gender, bloodGroup.getText().toString(), password.getText().toString(),
+                emergencyName.getText().toString(), emergencyNumber.getText().toString());
     }
 
     /**
@@ -180,6 +183,14 @@ public class RegistrationActivity extends AppCompatActivity {
         }
         if(!passwordValidator(password.getText().toString())) {
             password.setError(getString(R.string.invalid_field));
+            ctr = 1;
+        }
+        if(!nameValidator(emergencyName.getText().toString())) {
+            emergencyName.setError(getString(R.string.invalid_field));
+            ctr = 1;
+        }
+        if(!phoneNoValidator(emergencyNumber.getText().toString())) {
+            emergencyNumber.setError(getString(R.string.invalid_field));
             ctr = 1;
         }
         return (ctr == 0);

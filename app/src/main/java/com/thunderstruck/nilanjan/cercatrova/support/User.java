@@ -38,11 +38,16 @@ public class User implements Serializable{
     private String password;
     @SerializedName("location") @Expose
     private Location location;
+    @SerializedName("emergency_name") @Expose
+    private String emergencyName;
+    @SerializedName("emergency_number") @Expose
+    private String emergencyNumber;
 
 
     public User(String adhaarNumber, String firstName, String lastName,
                 String emailId, String contactNumber, String address,
-                int age, String gender, String bloodGroup, String password) {
+                int age, String gender, String bloodGroup, String password,
+                String emergencyName, String emergencyNumber) {
         this.adhaarNumber = adhaarNumber;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -53,6 +58,8 @@ public class User implements Serializable{
         this.gender = gender;
         this.bloodGroup = bloodGroup;
         this.password = password;
+        this.emergencyName = emergencyName;
+        this.emergencyNumber = emergencyNumber;
     }
 
     /**
@@ -73,7 +80,8 @@ public class User implements Serializable{
     public User(String adhaarNumber, String firstName, String lastName,
                 String emailId, String contactNumber, String address,
                 int age, String gender, String bloodGroup,
-                String password, Location location, String deviceID) {
+                String password, Location location, String deviceID,
+                String emergencyName, String emergencyNumber) {
         super();
 
         this.adhaarNumber = adhaarNumber;
@@ -88,6 +96,8 @@ public class User implements Serializable{
         this.password = password;
         this.location = location;
         this.deviceID = deviceID;
+        this.emergencyName = emergencyName;
+        this.emergencyNumber = emergencyNumber;
     }
 
     public String getAdhaarNumber() {
@@ -181,5 +191,19 @@ public class User implements Serializable{
     public String getDeviceID() {
         return this.deviceID;
     }
+
+    public String getEmergencyName() {
+        return emergencyName;
+    }
+
+    public void setEmergencyName(String emergencyName) {
+        this.emergencyName = emergencyName;
+    }
+
+    public String getEmergencyNumber() {
+        return emergencyNumber;
+    }
+
+    public void setEmergencyNumber(String emergencyNumber) { this.emergencyNumber = emergencyNumber; }
 
 }
