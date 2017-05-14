@@ -2,6 +2,7 @@ package com.thunderstruck.nilanjan.cercatrova;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.thunderstruck.nilanjan.cercatrova.support.Constants;
+import com.thunderstruck.nilanjan.cercatrova.support.Encryption;
 import com.thunderstruck.nilanjan.cercatrova.support.Endpoint;
 import com.thunderstruck.nilanjan.cercatrova.support.User;
 
@@ -48,6 +50,7 @@ public class RegistrationActivity extends AppCompatActivity {
     @BindView(R.id.register) Button register;
     private Endpoint apiService;
     private ProgressDialog progressDialog;
+    private SharedPreferences sharedPreferences;
 
     /**
      * Perform initialization of all fragments and loaders.
@@ -62,8 +65,12 @@ public class RegistrationActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
-                
+                try {
+                    attemptLogin();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
 
         });
@@ -85,12 +92,15 @@ public class RegistrationActivity extends AppCompatActivity {
                 .build();
         //Create an implementation of the API endpoints defined by the service interface.
         apiService = retrofit.create(Endpoint.class);
+        sharedPreferences = this.getSharedPreferences(getString(R.string.shared_preference_file), MODE_PRIVATE);
+
     }
+
 
     /**
      *If valid credentials are provided, the user details are stored which is carried forward in the next GUI
      */
-    private void attemptLogin() {
+    private void attemptLogin() throws Exception {
         if (validateLogin()) {
             
             User user = getDetails();
@@ -109,6 +119,10 @@ public class RegistrationActivity extends AppCompatActivity {
                 public void onResponse(Call<User> call, Response<User> response) {
                     progressDialog.dismiss();
                     User user = response.body();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("user_id", user.getEmailId());
+                    editor.putString("password", password.getText().toString());
+                    editor.apply();
                     Intent intent = new Intent(getBaseContext(), MainActivity.class);
                     intent.putExtra("profile_data", user);
                     startActivity(intent);
@@ -137,13 +151,14 @@ public class RegistrationActivity extends AppCompatActivity {
     /**
      * Instantiating and returning a new user object
      */
-    private User getDetails() {
+    private User getDetails() throws Exception {
         int selectedId = gender.getCheckedRadioButtonId();
         RadioButton radioButton = (RadioButton) findViewById(selectedId);
         String gender = radioButton.getText().toString();
         return new User(adhaarNumber.getText().toString(), firstName.getText().toString(), lastName.getText().toString(),
                 emailId.getText().toString(), phoneNumber.getText().toString(), address.getText().toString(),
-                Integer.parseInt(age.getText().toString()), gender, bloodGroup.getText().toString(), password.getText().toString(),
+                Integer.parseInt(age.getText().toString()), gender, bloodGroup.getText().toString(),
+                Encryption.encryptPassword(password.getText().toString()),
                 emergencyName.getText().toString(), emergencyNumber.getText().toString());
     }
 
