@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.thunderstruck.nilanjan.cercatrova.support.AuthenticationPacket;
 import com.thunderstruck.nilanjan.cercatrova.support.Constants;
+import com.thunderstruck.nilanjan.cercatrova.support.Encryption;
 import com.thunderstruck.nilanjan.cercatrova.support.Endpoint;
 import com.thunderstruck.nilanjan.cercatrova.support.User;
 
@@ -62,6 +63,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private ProgressDialog progressDialog;
     private Endpoint apiService;
     private SharedPreferences sharedPreferences;
+
 
     /**
      * Perform initialization of all fragments and loaders.
@@ -239,7 +241,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             /*
             Invoking the API to perform the registration
              */
-            AuthenticationPacket packet = new AuthenticationPacket(email, password);
+            AuthenticationPacket packet = null;
+            try {
+                packet = new AuthenticationPacket(email, Encryption.encryptPassword(password));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             Call<User> call = apiService.validateLogin(packet);
             call.enqueue(new Callback<User>() {
 
