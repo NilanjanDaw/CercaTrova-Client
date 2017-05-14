@@ -140,7 +140,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 finish();
             }
         });
-
     }
 
     private void populateAutoComplete() {

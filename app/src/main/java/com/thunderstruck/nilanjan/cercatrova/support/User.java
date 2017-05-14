@@ -38,9 +38,11 @@ public class User implements Serializable{
     private String password;
     @SerializedName("location") @Expose
     private Location location;
-    @SerializedName("emergency_name") @Expose
+    @SerializedName("emergency_contact_name")
+    @Expose
     private String emergencyName;
-    @SerializedName("emergency_number") @Expose
+    @SerializedName("emergency_contact_number")
+    @Expose
     private String emergencyNumber;
 
 

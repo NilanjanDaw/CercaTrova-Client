@@ -12,14 +12,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -73,15 +71,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     Button police;
     @BindView(R.id.fire_fighter)
     Button fireFighter;
-    @BindView(R.id.emergency_name)
-    EditText emergencyName;
-    @BindView(R.id.emergency_number)
-    EditText emergencyNumber;
-    @BindView(R.id.firstname)
-    EditText firstName;
-    @BindView(R.id.lastname)
-    EditText lastName;
-    String emergencyNo = emergencyNumber.getText().toString();
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private LocationSettingsRequest locationSettingsRequest;
@@ -90,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private int typeOfEmergency;
     private Endpoint apiService;
     private ProgressDialog progressDialog;
-
+    private int smsPermission = 0;
     /**
      * Perform initialization of all fragments and loaders.
      *
@@ -119,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Finding Help...");
+
     }
 
     /**
@@ -128,20 +118,30 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     protected void onResume() {
         super.onResume();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            requestSMSPermission();
+        } else {
+            smsPermission = 1;
+        }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    void sendSMSmessage() {
 
-        if (checkSelfPermission(Manifest.permission.SEND_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (shouldShowRequestPermissionRationale(Manifest.permission.SEND_SMS)) {
-                requestPermissions(new String[]{Manifest.permission.SEND_SMS},
-                        MY_PERMISSIONS_REQUEST_SEND_SMS);
-            } else {
-                requestPermissions(new String[]{Manifest.permission.SEND_SMS},
-                        MY_PERMISSIONS_REQUEST_SEND_SMS);
+    void requestSMSPermission() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.SEND_SMS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.SEND_SMS)) {
+                    requestPermissions(new String[]{Manifest.permission.SEND_SMS},
+                            MY_PERMISSIONS_REQUEST_SEND_SMS);
+                } else {
+                    requestPermissions(new String[]{Manifest.permission.SEND_SMS},
+                            MY_PERMISSIONS_REQUEST_SEND_SMS);
+                }
             }
+        } else {
+
+            smsPermission = 1;
         }
     }
 
@@ -319,6 +319,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         } else if (requestCode == MY_PERMISSIONS_REQUEST_SEND_SMS) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                smsPermission = 1;
             }
         }
     }
@@ -479,11 +480,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         protected void onPostExecute(EmergencyPersonnel emergencyPersonnel) {
             super.onPostExecute(emergencyPersonnel);
 
-            String message = firstName.getText().toString() + lastName.getText().toString() + "is in trouble. " +
+            String message = user.getFirstName().trim() + " " + user.getLastName().trim() + " is in trouble. " +
                     "For accessing his/her location, click http://maps.google.com/?q=" + user.getLocation().getCoordinates().get(0)
                     + "," + user.getLocation().getCoordinates().get(1);
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(emergencyNo, null, message, null, null);
+            if (smsPermission == 1) {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(user.getEmergencyNumber(), null, message, null, null);
+            } else {
+                requestSMSPermission();
+            }
             Toast.makeText(getApplicationContext(), "SMS sent.",
                     Toast.LENGTH_LONG).show();
 
