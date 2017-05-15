@@ -1,18 +1,26 @@
 package com.thunderstruck.nilanjan.cercatrova.support;
 
+import android.util.Base64;
+import android.util.Log;
+
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
 public class Encryption {
     private final static char[] hexArray = "0123456789abcdef".toCharArray();
+    private static final String TAG = Encryption.class.getName();
+    private static Cipher cipher = null;
+    private static SecretKey secretKey;
 
-    public static String encryptPassword(String arg) throws Exception {
-        return bytesToHex(encrypt(arg));
-    }
-
-    private static byte[] encrypt(String x) throws Exception {
-        java.security.MessageDigest d = null;
-        d = java.security.MessageDigest.getInstance("SHA-1");
-        d.reset();
-        d.update(x.getBytes());
-        return d.digest();
+    public Encryption() throws NoSuchPaddingException, NoSuchAlgorithmException {
+        byte[] decodedKey = Base64.decode(Constants.PASS_KEY, Base64.DEFAULT);
+        // rebuild key using SecretKeySpec
+        secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
+        cipher = Cipher.getInstance("AES");
     }
 
     private static String bytesToHex(byte[] bytes) {
@@ -23,5 +31,37 @@ public class Encryption {
             hexChars[j * 2 + 1] = hexArray[v & 0x0F];
         }
         return new String(hexChars);
+    }
+
+    public String encryptPassword(String arg) throws Exception {
+
+        // uncomment the following line to add the Provider of choice
+        //Security.addProvider(new com.sun.crypto.provider.SunJCE());
+
+
+        String encodedKey = Base64.encodeToString(secretKey.getEncoded(), Base64.DEFAULT);
+        byte[] encryptMessage = encryptMsg(arg, secretKey);
+        Log.d(TAG, "getCipherText: " + bytesToHex(encryptMessage));
+        String decryptedMessage = decryptMsg(encryptMessage, secretKey);
+        Log.d(TAG, "getCipherText: " + decryptedMessage);
+        return bytesToHex(encryptMessage);
+    }
+
+    private byte[] encryptMsg(String message, SecretKey secret)
+            throws Exception {
+       /* Encrypt the message. */
+        Cipher cipher = null;
+        cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, secret);
+        return cipher.doFinal(message.getBytes("UTF-8"));
+    }
+
+    private String decryptMsg(byte[] cipherText, SecretKey secret)
+            throws Exception {
+	    /* Decrypt the message, given derived encContentValues and initialization vector. */
+        Cipher cipher = null;
+        cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        cipher.init(Cipher.DECRYPT_MODE, secret);
+        return new String(cipher.doFinal(cipherText), "UTF-8");
     }
 }

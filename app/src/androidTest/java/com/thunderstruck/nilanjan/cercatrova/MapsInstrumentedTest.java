@@ -53,7 +53,7 @@ public class MapsInstrumentedTest {
             arrayList1.add(106.9);
             Location location1 = new Location("Point", arrayList1);
             User user = new User("222244445555", "Dia", "Paul", "p20@gmail.com", "9831141355", "earth", 21, "F", "A+", "abc123",
-                    location, "dev12345");
+                    location, "dev12345", "hello", "1234567890");
             EmergencyPersonnel emergencyPersonnel = new EmergencyPersonnel("P7942","111122223333","Debapriya","Paul","9831141377","WB241977",
                     1 ,"Kankurgachi",location1);
             Context targetContext = InstrumentationRegistry.getInstrumentation()

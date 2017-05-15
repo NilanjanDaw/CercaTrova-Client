@@ -283,19 +283,21 @@ public class RegistrationInstrumentedTest {
     @Test
     public void validCredentials() {
         onView(withId(R.id.firstname))
-                .perform(scrollTo(), typeText("Debapriya"), closeSoftKeyboard());
-        onView(withId(R.id.lastname)).perform(scrollTo(), typeText("Paul"), closeSoftKeyboard());
+                .perform(scrollTo(), typeText("Nilanjan"), closeSoftKeyboard());
+        onView(withId(R.id.lastname)).perform(scrollTo(), typeText("Daw"), closeSoftKeyboard());
         onView(withId(R.id.phone_number))
                 .perform(scrollTo(), typeText("9831141366"), closeSoftKeyboard());
-        onView(withId(R.id.email_id)).perform(scrollTo(), typeText("paul120@gmail.com"), closeSoftKeyboard());
+        onView(withId(R.id.email_id)).perform(scrollTo(), typeText("nil@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.address))
-                .perform(scrollTo(), typeText("46, Bangur Avenue"), closeSoftKeyboard());
-        onView(withId(R.id.adhaar_number)).perform(scrollTo(), typeText("222255550078"), closeSoftKeyboard());
+                .perform(scrollTo(), typeText("world"), closeSoftKeyboard());
+        onView(withId(R.id.adhaar_number)).perform(scrollTo(), typeText("244255550078"), closeSoftKeyboard());
         onView(withId(R.id.age))
                 .perform(scrollTo(), typeText("21"), closeSoftKeyboard());
         onView(withId(R.id.female)).perform(scrollTo(), click());
         onView(withId(R.id.blood_group)).perform(scrollTo(), typeText("A+"), closeSoftKeyboard());
-        onView(withId(R.id.password)).perform(scrollTo(), typeText("bghjudfg45"), closeSoftKeyboard());
+        onView(withId(R.id.password)).perform(scrollTo(), typeText("abc123"), closeSoftKeyboard());
+        onView(withId(R.id.emergency_name)).perform(scrollTo(), typeText("World"), closeSoftKeyboard());
+        onView(withId(R.id.emergency_number)).perform(scrollTo(), typeText("9674362607"), closeSoftKeyboard());
         onView(withId(R.id.register)).perform(scrollTo(), click());
         intended(hasComponent(MainActivity.class.getName()));
     }

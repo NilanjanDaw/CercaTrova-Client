@@ -243,7 +243,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
              */
             AuthenticationPacket packet = null;
             try {
-                packet = new AuthenticationPacket(email, Encryption.encryptPassword(password));
+                Encryption encryption = new Encryption();
+                packet = new AuthenticationPacket(email, encryption.encryptPassword(password));
             } catch (Exception e) {
                 e.printStackTrace();
             }

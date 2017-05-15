@@ -489,7 +489,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             } else {
                 requestSMSPermission();
             }
-            Toast.makeText(getApplicationContext(), "SMS sent.",
+            Toast.makeText(getApplicationContext(), "Emergency Contact Alerted!",
                     Toast.LENGTH_LONG).show();
 
             if (emergencyPersonnel != null) {

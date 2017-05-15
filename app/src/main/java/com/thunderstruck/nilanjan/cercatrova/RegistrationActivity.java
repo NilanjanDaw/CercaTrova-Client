@@ -155,10 +155,11 @@ public class RegistrationActivity extends AppCompatActivity {
         int selectedId = gender.getCheckedRadioButtonId();
         RadioButton radioButton = (RadioButton) findViewById(selectedId);
         String gender = radioButton.getText().toString();
+        Encryption encryption = new Encryption();
         return new User(adhaarNumber.getText().toString(), firstName.getText().toString(), lastName.getText().toString(),
                 emailId.getText().toString(), phoneNumber.getText().toString(), address.getText().toString(),
                 Integer.parseInt(age.getText().toString()), gender, bloodGroup.getText().toString(),
-                Encryption.encryptPassword(password.getText().toString()),
+                encryption.encryptPassword(password.getText().toString()),
                 emergencyName.getText().toString(), emergencyNumber.getText().toString());
     }
 

@@ -49,7 +49,7 @@ public class MainInstrumentedTest {
                     arrayList.add(102.45);
                     Location location = new Location("Point", arrayList);
                     User user = new User("222244445555","Dia","Paul","p20@gmail.com","9831141355","earth",21,"F","A+","abc123",
-                            location, "dev12345" );
+                            location, "dev12345", "hello", "1234567890");
                     Context targetContext = InstrumentationRegistry.getInstrumentation()
                             .getTargetContext();
                     Intent result = new Intent(targetContext, MainActivity.class);
