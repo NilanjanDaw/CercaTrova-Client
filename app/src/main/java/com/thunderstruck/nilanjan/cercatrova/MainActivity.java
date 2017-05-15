@@ -53,7 +53,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 //import android.support.v4.app.ActivityCompatApi23;
 
 /**
- * Created by Nilanjan and Debapriya on 09-Apr-17.
+ * Created by Nilanjan and Debapriya :) on 09-Apr-17.
  * Project CercaTrova
  */
 

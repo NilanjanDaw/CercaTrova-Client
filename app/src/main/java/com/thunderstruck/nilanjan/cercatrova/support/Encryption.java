@@ -10,6 +10,11 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+/**
+ * Created by Nilanjan and Debapriya :) on 14-May-17.
+ * Project CercaTrova
+ */
+
 public class Encryption {
     /*
      Hexadecimal lookup array for byte array to Hexadecimal string conversion
@@ -24,6 +29,9 @@ public class Encryption {
         secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
     }
 
+    /*
+    conversion of byte array to hexadecimal
+     */
     private static String bytesToHex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];
         for ( int j = 0; j < bytes.length; j++ ) {
@@ -47,7 +55,10 @@ public class Encryption {
             throws Exception {
        /* Encrypt the message. */
         Cipher cipher;
+        //the application calls the Cipher's getInstance method in order to create a Cipher object,
+        // and passes the name of the requested transformation to it
         cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        //A transformation is of the form : "algorithm/mode/padding"
         cipher.init(Cipher.ENCRYPT_MODE, secret);
         return cipher.doFinal(message.getBytes("UTF-8"));
     }
@@ -56,7 +67,10 @@ public class Encryption {
             throws Exception {
 	    /* Decrypt the message, given derived encContentValues and initialization vector. */
         Cipher cipher;
+        //the application calls the Cipher's getInstance method in order to create a Cipher object,
+        // and passes the name of the requested transformation to it
         cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        //A transformation is of the form : "algorithm/mode/padding"
         cipher.init(Cipher.DECRYPT_MODE, secret);
         return new String(cipher.doFinal(cipherText), "UTF-8");
     }
