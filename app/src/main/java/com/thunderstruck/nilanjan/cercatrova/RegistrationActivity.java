@@ -31,7 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Registration UI Activity
- * @author Debapriya and Nilanjan
+ * @author Debapriya and Nilanjan :)
  */
 public class RegistrationActivity extends AppCompatActivity {
 

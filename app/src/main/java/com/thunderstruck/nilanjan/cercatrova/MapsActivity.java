@@ -45,7 +45,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 /**
  * Maps UI Activity
- * @author Nilanjan and Debapriya
+ * @author Nilanjan and Debapriya :)
  */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
