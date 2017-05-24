@@ -3,21 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
-        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_d3b52aa5ed2288731dd6752f38f91b9a9d1a9511\classes.dex" />
+        sha1="02878fc89dcb8f95caa22ba53382eb3b203eac98">
+        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_baeac42f81f511082a318af17231e4e2b61aeec6\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jar="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="c60f5cdee59bbc73ac9eee0084f31c5f7865c341">
-        <dex dex="D:\Projects\CercaTrova\client\CercaTrova\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_152da76de937890d80b22c7f3caac88d273dd451\classes.dex" />
+        sha1="12920f9016b8b05acbc2af7cdc13cef6946fe7d3">
+        <dex dex="C:\Users\DEBAPRIYA\Desktop\CercaTrovaPersonnel\CercaTrovaUser\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_a49043960948b769651820254ea4b33dfe236d9f\classes.dex" />
     </item>
 
 </items>

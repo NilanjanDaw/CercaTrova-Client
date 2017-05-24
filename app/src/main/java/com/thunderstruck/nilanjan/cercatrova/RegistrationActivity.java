@@ -230,7 +230,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private boolean nameValidator(String name)
     {
-        return !Objects.equals(name, "") && name.matches("[a-zA-Z]+");
+        return !Objects.equals(name, "") && name.matches("[a-zA-Z ]+");
     }
 
     private boolean adhaarNoValidator(String adhaarNumber)
