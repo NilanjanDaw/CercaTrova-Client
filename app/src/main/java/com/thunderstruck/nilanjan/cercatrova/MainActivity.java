@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         ButterKnife.bind(this);
         user = (User) getIntent().getSerializableExtra("profile_data");
         Log.d(TAG, "onCreate: " + user.getAdhaarNumber());
-        getLocation();
         /*
           Retrofit is a type-safe REST client for Android, used for interacting with the APIs and sending network requests
          */
@@ -118,6 +117,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     protected void onResume() {
         super.onResume();
+
+        getLocation();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
             requestSMSPermission();
         } else {
@@ -153,6 +154,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     protected void onPause() {
         super.onPause();
+        if (googleApiClient != null && googleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+        }
     }
 
     /**
